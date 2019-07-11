@@ -1,0 +1,21 @@
+{
+    "env": {
+        "browser": true,
+        "es6": true
+    },
+    "extends": [
+        "react-app",
+        "prettier"
+    ],
+    "rules": {
+        "semi": ["error", "always"],
+        "quotes": ["error", "single"],
+        "jsx-quotes": [
+            1,
+            "prefer-double"
+        ]
+    },
+    "plugins": [
+        "prettier"
+    ]
+}
