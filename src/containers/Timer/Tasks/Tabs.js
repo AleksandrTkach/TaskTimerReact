@@ -51,8 +51,8 @@ export default function NavTabs() {
 		<div className={`${classes.root} w-100`}>
 			<AppBar position="static">
 				<Tabs variant="fullWidth" value={value} onChange={handleChange}>
-					<LinkTab label="TASKS LOG" href="/tasks/log" />
-					<LinkTab label="TASKS CHART" href="/tasks/chart" />
+					<LinkTab label="Tasks Log" href="/tasks/log" />
+					<LinkTab label="Tasks Chart" href="/tasks/chart" />
 				</Tabs>
 			</AppBar>
 			{value === 0 && <TasksLog/>}

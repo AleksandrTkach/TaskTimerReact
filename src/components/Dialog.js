@@ -14,14 +14,12 @@ class FormDialog extends React.Component {
 			dialogTitle = '',
 			dialogContentText,
 			isOpenDialog,
-			clickDialogClose,
 			clickDialogSuccess,
 			btnSuccessText='Save',
-			btnRejectText='Cancel',
 		} = this.props;
 
 		return (
-				<Dialog open={isOpenDialog} onClose={clickDialogClose} aria-labelledby="form-dialog-title">
+				<Dialog open={isOpenDialog} aria-labelledby="form-dialog-title">
 
 					<DialogTitle id="form-dialog-title">{dialogTitle}</DialogTitle>
 
@@ -31,9 +29,6 @@ class FormDialog extends React.Component {
 					</DialogContent>
 
 					<DialogActions>
-						<Button onClick={clickDialogClose} color="primary">
-							{btnRejectText}
-						</Button>
 						<Button onClick={clickDialogSuccess} color="primary">
 							{btnSuccessText}
 						</Button>

@@ -10,6 +10,7 @@ export default class TimerButton extends React.Component {
 	};
 
 	stopTimer = () => {
+		this.props.reset();
 		this.props.stop();
 		this.props.toggleStatusTimer();
 	};

@@ -6,6 +6,9 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
+
+import moment from 'moment';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -18,47 +21,64 @@ const useStyles = makeStyles(theme => ({
 	},
 }));
 
-function createData(name, calories, fat, carbs, protein) {
-	return { name, calories, fat, carbs, protein };
-}
+const styleButton = {
+	background: 'white',
+	borderRadius: 0
+};
 
-const rows = [
-	createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-	createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-	createData('Eclair', 262, 16.0, 24, 6.0),
-	createData('Cupcake', 305, 3.7, 67, 4.3),
-	createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
+const tableHeads = ['№', 'Tasks', 'Time start', 'Time end', 'Time Spend', 'Info', 'Delete'];
+
+const rows = JSON.parse(localStorage.getItem('tasks'));
 
 export default function SimpleTable() {
 	const classes = useStyles();
+
+	function getFormatTime(value) {
+		return moment(+value).format('HH:mm:ss');
+	}
 
 	return (
 		<Paper className={classes.root}>
 			<Table className={classes.table}>
 				<TableHead>
 					<TableRow>
-						<TableCell> № </TableCell>
-						<TableCell align="right"> Tasks </TableCell>
-						<TableCell align="right"> Time start </TableCell>
-						<TableCell align="right"> Time end </TableCell>
-						<TableCell align="right"> Time Spend </TableCell>
-						<TableCell align="right"> Info </TableCell>
-						<TableCell align="right"> Delete </TableCell>
+						{
+							tableHeads.map(tableHead =>
+									<TableCell align='center'> {tableHead} </TableCell>
+							)
+						}
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					{rows.map(row => (
-						<TableRow key={row.name}>
-							<TableCell component="th" scope="row">
-								{row.name}
-							</TableCell>
-							<TableCell align="right">{row.calories}</TableCell>
-							<TableCell align="right">{row.fat}</TableCell>
-							<TableCell align="right">{row.carbs}</TableCell>
-							<TableCell align="right">{row.protein}</TableCell>
-						</TableRow>
-					))}
+					{
+						rows.length
+						? rows.map((row, index) => (
+							<TableRow key={`task-${index}`}>
+								<TableCell component='th' scope='row'>
+									{++index}
+								</TableCell>
+								<TableCell align='right'>{row.taskName}</TableCell>
+								<TableCell align='center'>{getFormatTime(row.timeStart)}</TableCell>
+								<TableCell align='center'>{getFormatTime(row.timeEnd)}</TableCell>
+								<TableCell align='center'>{getFormatTime(row.timeSpend)}</TableCell>
+								<TableCell align='center'>
+									<Button variant='contained' style={styleButton}>
+										Info
+									</Button>
+								</TableCell>
+								<TableCell align='center'>
+									<Button variant='contained' style={styleButton}>
+										Delete
+									</Button>
+								</TableCell>
+							</TableRow>
+						))
+						: <TableRow>
+								<TableCell align='center' colSpan='7'>
+									Tasks Not Found
+								</TableCell>
+							</TableRow>
+					}
 				</TableBody>
 			</Table>
 		</Paper>
