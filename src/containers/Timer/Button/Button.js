@@ -3,27 +3,21 @@ import Button from '@material-ui/core/Button/Button';
 import './Button.scss';
 
 export default class TimerButton extends React.Component {
-	constructor() {
-		super();
-		this.state = {
-			isTimerRun: false,
-		};
-	}
 
 	startTimer = () => {
 		this.props.start();
-		this.setState({ isTimerRun: true });
+		this.props.toggleStatusTimer();
 	};
 
 	stopTimer = () => {
 		this.props.stop();
-		this.setState({ isTimerRun: false });
+		this.props.toggleStatusTimer();
 	};
 
 	render() {
 		return (
 			<>
-				{!this.state.isTimerRun ? (
+				{!this.props.isStartTimer ? (
 					<Button
 						variant="contained"
 						className={'btn'}

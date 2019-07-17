@@ -10,41 +10,74 @@ export default class Timer extends React.Component {
 		super();
 		this.state = {
 			taskName: '',
+			initialTime: 0,
+			isStartTimer: false
 		};
+	}
+
+	componentWillMount() {
+		if (+this._getItem('isStartTimer')) {
+			this.setState({
+				initialTime: this._getCurrentTime() - this._getItem('timerStart'),
+				isStartTimer: true
+			});
+		}
 	}
 
 	handleChange = name => event => {
 		this.setState({ [name]: event.target.value });
 	};
 
-	getFormatValue = (value, text = ':') =>
-		`${value < 10 ? `0${value}` : value}${text}`;
+
+	toggleStatusTimer = () => {
+		this.setState({
+			isStartTimer: !this.state.isStartTimer
+		});
+
+		if (this.state.isStartTimer) {
+			this._removeItem('timerStart');
+			this._setItem('isStartTimer', 0);
+		} else {
+			this._setItem('isStartTimer', 1);
+			this._setItem('timerStart', this._getCurrentTime());
+		}
+	};
+
+	_getItem = name => localStorage.getItem(name);
+	_setItem = (name, value) => localStorage.setItem(name, value);
+	_removeItem = name => localStorage.removeItem(name);
+	_getCurrentTime = () => new Date().getTime();
+	_getFormatValue = (value, text = ':') => `${value < 10 ? `0${value}` : value}${text}`;
 
 	render() {
+		const {taskName, initialTime, isStartTimer} = this.state;
+
 		return (
 			<div className="timer__wrapper">
 				<TextField
-					value={this.state.taskName}
+					value={taskName}
 					onChange={this.handleChange('taskName')}
 					placeholder="Name of your task"
+					className="timer__input"
 				/>
 
 				<ReactTimer
-					startImmediately={false}
-					formatValue={value => this.getFormatValue(value)}
+					initialTime={initialTime}
+					startImmediately={isStartTimer}
+					formatValue={value => this._getFormatValue(value)}
 				>
 					{({ start, stop }) => (
 						<>
 							<Paper className="timer">
 								<ReactTimer.Hours
-									formatValue={value => this.getFormatValue(value)}
+									formatValue={value => this._getFormatValue(value)}
 								/>
 								<ReactTimer.Minutes />
 								<ReactTimer.Seconds
-									formatValue={value => this.getFormatValue(value, '')}
+									formatValue={value => this._getFormatValue(value, '')}
 								/>
 							</Paper>
-							<Button start={start} stop={stop} />
+							<Button start={start} stop={stop} isStartTimer={isStartTimer} toggleStatusTimer={this.toggleStatusTimer}/>
 						</>
 					)}
 				</ReactTimer>

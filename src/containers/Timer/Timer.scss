@@ -6,11 +6,16 @@
   width: 200px;
   border-radius: 50% !important;
   font-size: 3rem;
+  margin-bottom: 1rem !important;
 
   &__wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+
+  &__input {
+    margin-bottom: 1rem !important;
   }
 }
 
