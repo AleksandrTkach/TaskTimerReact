@@ -4,6 +4,7 @@ import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Dialog from 'components/Dialog';
 import Button from './Button/Button';
+import TaskInfo from './Tasks/Tabs';
 import './Timer.scss';
 
 export default class Timer extends React.Component {
@@ -76,56 +77,60 @@ export default class Timer extends React.Component {
 		} = this.state;
 
 		return (
-			<div className="timer__wrapper">
+			<>
+				<div className="timer__wrapper">
 
-				<Dialog
-					isOpenDialog={isOpenDialog}
-					clickDialogOpen={this.clickDialogOpen}
-					clickDialogClose={this.clickDialogClose}
-					clickDialogSuccess={this.clickDialogSuccess}
-					dialogTitle="Empty task name"
-					dialogContentText="You are trying close your task without name, please enter the name!"
-				>
+					<Dialog
+						isOpenDialog={isOpenDialog}
+						clickDialogOpen={this.clickDialogOpen}
+						clickDialogClose={this.clickDialogClose}
+						clickDialogSuccess={this.clickDialogSuccess}
+						dialogTitle="Empty task name"
+						dialogContentText="You are trying close your task without name, please enter the name!"
+					>
+						<TextField
+							autoFocus
+							margin="dense"
+							id="name"
+							label="Task name"
+							type="text"
+							fullWidth
+							value={taskName}
+							onChange={this.handleChange('taskName')}
+						/>
+					</Dialog>
+
 					<TextField
-						autoFocus
-						margin="dense"
-						id="name"
-						label="Task name"
-						type="text"
-						fullWidth
 						value={taskName}
 						onChange={this.handleChange('taskName')}
+						placeholder="Name of your task"
+						className="timer__input"
 					/>
-				</Dialog>
 
-				<TextField
-					value={taskName}
-					onChange={this.handleChange('taskName')}
-					placeholder="Name of your task"
-					className="timer__input"
-				/>
+					<ReactTimer
+						initialTime={initialTime}
+						startImmediately={isStartTimer}
+						formatValue={value => this._getFormatValue(value)}
+					>
+						{({ start, stop }) => (
+							<>
+								<Paper className="timer">
+									<ReactTimer.Hours
+										formatValue={value => this._getFormatValue(value)}
+									/>
+									<ReactTimer.Minutes />
+									<ReactTimer.Seconds
+										formatValue={value => this._getFormatValue(value, '')}
+									/>
+								</Paper>
+								<Button start={start} stop={stop} isStartTimer={isStartTimer} toggleStatusTimer={this.toggleStatusTimer}/>
+							</>
+						)}
+					</ReactTimer>
+				</div>
 
-				<ReactTimer
-					initialTime={initialTime}
-					startImmediately={isStartTimer}
-					formatValue={value => this._getFormatValue(value)}
-				>
-					{({ start, stop }) => (
-						<>
-							<Paper className="timer">
-								<ReactTimer.Hours
-									formatValue={value => this._getFormatValue(value)}
-								/>
-								<ReactTimer.Minutes />
-								<ReactTimer.Seconds
-									formatValue={value => this._getFormatValue(value, '')}
-								/>
-							</Paper>
-							<Button start={start} stop={stop} isStartTimer={isStartTimer} toggleStatusTimer={this.toggleStatusTimer}/>
-						</>
-					)}
-				</ReactTimer>
-			</div>
+				<TaskInfo/>
+			</>
 		);
 	}
 }
