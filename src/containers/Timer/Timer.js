@@ -23,14 +23,17 @@ class Timer extends React.Component {
 	}
 
 	componentWillMount() {
-		if (this._getItem('tasks') === null) {
-			this._setItem('tasks', JSON.stringify([]));
-		}
+		const isStartTimer = this._getItem('isStartTimer');
 
-		if (+this._getItem('isStartTimer')) {
+		if (!isStartTimer) {
 			this.setState({
-				initialTime: this._getCurrentTime() - this._getItem('timeStart'),
-				isStartTimer: true
+				initialTime: this._getItem('timePassed'),
+				isStartTimer,
+			});
+		} else {
+			this.setState({
+				initialTime: this._getCurrentTime() - this._getItem('timeStart'), //TODO: fix it
+				isStartTimer,
 			});
 		}
 	}
@@ -47,6 +50,8 @@ class Timer extends React.Component {
 			}
 			stop();
 			this._setItem('isStartTimer', 0);
+			this._setItem('timeStop', this._getCurrentTime());
+			this._setItem('timePassed', this._getItem('timePassed') + (this._getCurrentTime() -  this._getItem('timeStart')));
 
 		} else {
 			start();
@@ -62,7 +67,7 @@ class Timer extends React.Component {
 	};
 
 	_toggleIsOpenDialog = status => this.setState({ isOpenDialog: status });
-	_getItem = name => localStorage.getItem(name);
+	_getItem = name => Number(localStorage.getItem(name));
 	_setItem = (name, value) => localStorage.setItem(name, value);
 
 	_getCurrentTime = () => new Date().getTime();
