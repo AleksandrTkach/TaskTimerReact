@@ -6,7 +6,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-class FormDialog extends React.Component {
+export default class FormDialog extends React.Component {
 
 	render() {
 
@@ -20,7 +20,6 @@ class FormDialog extends React.Component {
 			btnSuccessText='Save',
 		} = this.props;
 
-		console.log('isDisabledSuccess: ', isDisabledDialogSuccess);
 		return (
 				<Dialog open={isOpenDialog} onClose={clickDialogClose} aria-labelledby="form-dialog-title">
 
@@ -41,5 +40,3 @@ class FormDialog extends React.Component {
 		);
 	}
 }
-
-export default FormDialog;

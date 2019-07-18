@@ -36,6 +36,41 @@ const SimpleTable = (props) => {
 		return moment(+value).format('HH:mm:ss');
 	}
 
+	function getTibleBody(tasks) {
+		if (tasks.length) {
+			return tasks.map((task, index) => (
+					<TableRow key={`task-body-${index}`}>
+						<TableCell component="th" scope="row">
+							{++index}
+						</TableCell>
+						<TableCell align="right">{task.taskName}</TableCell>
+						<TableCell align="center">{getFormatTime(task.timeStart)}</TableCell>
+						<TableCell align="center">{getFormatTime(task.timeEnd)}</TableCell>
+						<TableCell align="center">{getFormatTime(task.timeSpend)}</TableCell>
+						<TableCell align="center">
+							<Button variant="contained" style={styleButton}>
+								Info
+							</Button>
+						</TableCell>
+						<TableCell align="center">
+							<Button variant="contained" style={styleButton}>
+								Delete
+							</Button>
+						</TableCell>
+					</TableRow>
+				));
+
+			} else {
+				return (
+					<TableRow>
+						<TableCell align="center" colSpan="7">
+							Tasks Not Found
+						</TableCell>
+					</TableRow>
+				);
+			}
+	}
+
 	return (
 		<Paper className={classes.root}>
 			<Table className={classes.table}>
@@ -43,41 +78,17 @@ const SimpleTable = (props) => {
 					<TableRow>
 						{
 							tableHeads.map((tableHead, index) =>
-									<TableCell key={`task-header-${index}`} align="center"> {tableHead} </TableCell>
+									<TableCell key={`task-header-${index}`} align="center">
+										{tableHead}
+									</TableCell>
 							)
 						}
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					{
-						props.tasks.length
-						? props.tasks.map((row, index) => (
-							<TableRow key={`task-body-${index}`}>
-								<TableCell component="th" scope="row">
-									{++index}
-								</TableCell>
-								<TableCell align="right">{row.taskName}</TableCell>
-								<TableCell align="center">{getFormatTime(row.timeStart)}</TableCell>
-								<TableCell align="center">{getFormatTime(row.timeEnd)}</TableCell>
-								<TableCell align="center">{getFormatTime(row.timeSpend)}</TableCell>
-								<TableCell align="center">
-									<Button variant="contained" style={styleButton}>
-										Info
-									</Button>
-								</TableCell>
-								<TableCell align="center">
-									<Button variant="contained" style={styleButton}>
-										Delete
-									</Button>
-								</TableCell>
-							</TableRow>
-						))
-						: <TableRow>
-								<TableCell align="center" colSpan="7">
-									Tasks Not Found
-								</TableCell>
-							</TableRow>
-					}
+
+					{getTibleBody(props.tasks)}
+
 				</TableBody>
 			</Table>
 		</Paper>

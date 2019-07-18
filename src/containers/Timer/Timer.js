@@ -7,7 +7,10 @@ import Button from './Button/Button';
 import TaskInfo from './Tasks/Tabs';
 import './Timer.scss';
 
-export default class Timer extends React.Component {
+import { setTask } from 'store/actions';
+import { connect } from 'react-redux';
+
+class Timer extends React.Component {
 	constructor() {
 		super();
 		this.state = {
@@ -31,10 +34,6 @@ export default class Timer extends React.Component {
 			});
 		}
 	}
-
-	// handleChange = name => event => {
-	// 	this.setState({[name]: event.target.value});
-	// };
 
 	toggleStatusTimer = (start, stop) => {
 
@@ -80,21 +79,17 @@ export default class Timer extends React.Component {
 	};
 
 	_addTaskLog = () => {
-		let tasks = JSON.parse(this._getItem('tasks'));
-
 		const taskName = this.state.taskName;
 		const timeStart = this._getItem('timeStart');
 		const timeEnd = this._getCurrentTime();
 		const timeSpend = timeEnd - timeStart;
 
-		tasks.push({
+		this.props.setTask({
 			taskName,
 			timeStart,
 			timeEnd,
 			timeSpend,
 		});
-
-		this._setItem('tasks', JSON.stringify(tasks));
 	};
 
 	handleChangeTaskName = (event) => {
@@ -172,3 +167,18 @@ export default class Timer extends React.Component {
 		);
 	}
 }
+
+const mapStateToProps = ({tasks}) => {
+	return {
+		tasks,
+	};
+};
+
+const mapDispatchToProps = {
+	setTask: setTask
+};
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps,
+)(Timer);
