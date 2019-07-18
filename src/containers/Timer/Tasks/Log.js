@@ -8,6 +8,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 
+import { connect } from 'react-redux';
 import moment from 'moment';
 
 const useStyles = makeStyles(theme => ({
@@ -28,9 +29,7 @@ const styleButton = {
 
 const tableHeads = ['№', 'Tasks', 'Time start', 'Time end', 'Time Spend', 'Info', 'Delete'];
 
-const rows = JSON.parse(localStorage.getItem('tasks'));
-
-export default function SimpleTable() {
+const SimpleTable = (props) => {
 	const classes = useStyles();
 
 	function getFormatTime(value) {
@@ -43,38 +42,38 @@ export default function SimpleTable() {
 				<TableHead>
 					<TableRow>
 						{
-							tableHeads.map(tableHead =>
-									<TableCell align='center'> {tableHead} </TableCell>
+							tableHeads.map((tableHead, index) =>
+									<TableCell key={`task-header-${index}`} align="center"> {tableHead} </TableCell>
 							)
 						}
 					</TableRow>
 				</TableHead>
 				<TableBody>
 					{
-						rows.length
-						? rows.map((row, index) => (
-							<TableRow key={`task-${index}`}>
-								<TableCell component='th' scope='row'>
+						props.tasks.length
+						? props.tasks.map((row, index) => (
+							<TableRow key={`task-body-${index}`}>
+								<TableCell component="th" scope="row">
 									{++index}
 								</TableCell>
-								<TableCell align='right'>{row.taskName}</TableCell>
-								<TableCell align='center'>{getFormatTime(row.timeStart)}</TableCell>
-								<TableCell align='center'>{getFormatTime(row.timeEnd)}</TableCell>
-								<TableCell align='center'>{getFormatTime(row.timeSpend)}</TableCell>
-								<TableCell align='center'>
-									<Button variant='contained' style={styleButton}>
+								<TableCell align="right">{row.taskName}</TableCell>
+								<TableCell align="center">{getFormatTime(row.timeStart)}</TableCell>
+								<TableCell align="center">{getFormatTime(row.timeEnd)}</TableCell>
+								<TableCell align="center">{getFormatTime(row.timeSpend)}</TableCell>
+								<TableCell align="center">
+									<Button variant="contained" style={styleButton}>
 										Info
 									</Button>
 								</TableCell>
-								<TableCell align='center'>
-									<Button variant='contained' style={styleButton}>
+								<TableCell align="center">
+									<Button variant="contained" style={styleButton}>
 										Delete
 									</Button>
 								</TableCell>
 							</TableRow>
 						))
 						: <TableRow>
-								<TableCell align='center' colSpan='7'>
+								<TableCell align="center" colSpan="7">
 									Tasks Not Found
 								</TableCell>
 							</TableRow>
@@ -83,4 +82,14 @@ export default function SimpleTable() {
 			</Table>
 		</Paper>
 	);
-}
+};
+
+const mapStateToProps = ({tasks}) => {
+	return {
+		tasks,
+	};
+};
+
+export default connect(
+	mapStateToProps,
+)(SimpleTable);

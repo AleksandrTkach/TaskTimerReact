@@ -15,6 +15,7 @@ export default class Timer extends React.Component {
 			initialTime: 0,
 			isStartTimer: false,
 			isOpenDialog: false,
+			isDisabledDialogSuccess: true,
 		};
 	}
 
@@ -31,50 +32,52 @@ export default class Timer extends React.Component {
 		}
 	}
 
-	handleChange = name => event => {
-		this.setState({ [name]: event.target.value });
-	};
+	// handleChange = name => event => {
+	// 	this.setState({[name]: event.target.value});
+	// };
 
-	toggleStatusTimer = () => {
+	toggleStatusTimer = (start, stop) => {
+
 		this.setState({
 			isStartTimer: !this.state.isStartTimer
 		});
 
 		if (this.state.isStartTimer) {
 			if (this.state.taskName === '') {
-				this.clickDialogOpen();
+				this._toggleIsOpenDialog(true);
 			}
+			stop();
 			this._setItem('isStartTimer', 0);
+
 		} else {
+			start();
 			this._setItem('isStartTimer', 1);
 			this._setItem('timeStart', this._getCurrentTime());
 		}
 	};
 
-	clickDialogOpen = () => {
-		this.setState({ isOpenDialog:true });
-	};
-
 	clickDialogSuccess = () => {
-		this.setState({ isOpenDialog:false });
+		this._toggleIsOpenDialog(false);
 		this._addTaskLog();
 		this._resetTimer();
 	};
 
-
+	_toggleIsOpenDialog = status => this.setState({ isOpenDialog: status });
 	_getItem = name => localStorage.getItem(name);
 	_setItem = (name, value) => localStorage.setItem(name, value);
-	_removeItem = name => localStorage.removeItem(name);
 
 	_getCurrentTime = () => new Date().getTime();
 	_getFormatValue = (value, text = ':') => `${value < 10 ? `0${value}` : value}${text}`;
 
-	_resetTimer = () => this.setState({
-		taskName: '',
-		initialTime: 0,
-		isStartTimer: false,
-		isOpenDialog: false,
-	});
+	_resetTimer = () => {
+		console.log('_resetTimer');
+		this.setState({
+			taskName: '',
+			initialTime: 0,
+			isStartTimer: false,
+			isOpenDialog: false,
+		});
+	};
 
 	_addTaskLog = () => {
 		let tasks = JSON.parse(this._getItem('tasks'));
@@ -92,8 +95,13 @@ export default class Timer extends React.Component {
 		});
 
 		this._setItem('tasks', JSON.stringify(tasks));
-		// this._removeItem('timeStart');
+	};
 
+	handleChangeTaskName = (event) => {
+		this.setState({
+			taskName: event.target.value,
+			isDisabledDialogSuccess: event.target.value === '',
+		});
 	};
 
 	render() {
@@ -102,7 +110,7 @@ export default class Timer extends React.Component {
 			initialTime,
 			isStartTimer,
 			isOpenDialog,
-
+			isDisabledDialogSuccess,
 		} = this.state;
 
 		return (
@@ -110,8 +118,10 @@ export default class Timer extends React.Component {
 				<div className="timer__wrapper">
 
 					<Dialog
+						isDisabledDialogSuccess={isDisabledDialogSuccess}
 						isOpenDialog={isOpenDialog}
-						clickDialogOpen={this.clickDialogOpen}
+						clickDialogOpen={() => this._toggleIsOpenDialog(true)}
+						clickDialogClose={() => this._toggleIsOpenDialog(false)}
 						clickDialogSuccess={this.clickDialogSuccess}
 						dialogTitle="Empty task name"
 						dialogContentText="You are trying close your task without name, please enter the name!"
@@ -124,13 +134,13 @@ export default class Timer extends React.Component {
 							type="text"
 							fullWidth
 							value={taskName}
-							onChange={this.handleChange('taskName')}
+							onChange={this.handleChangeTaskName}
 						/>
 					</Dialog>
 
 					<TextField
 						value={taskName}
-						onChange={this.handleChange('taskName')}
+						onChange={this.handleChangeTaskName}
 						placeholder="Name of your task"
 						className="timer__input"
 					/>

@@ -3,18 +3,6 @@ import Button from '@material-ui/core/Button/Button';
 import './Button.scss';
 
 export default class TimerButton extends React.Component {
-
-	startTimer = () => {
-		this.props.start();
-		this.props.toggleStatusTimer();
-	};
-
-	stopTimer = () => {
-		this.props.reset();
-		this.props.stop();
-		this.props.toggleStatusTimer();
-	};
-
 	render() {
 		return (
 			<>
@@ -22,7 +10,7 @@ export default class TimerButton extends React.Component {
 					<Button
 						variant="contained"
 						className={'btn'}
-						onClick={() => this.startTimer()}
+						onClick={() => this.props.toggleStatusTimer(this.props.start, this.props.stop)}
 					>
 						Start
 					</Button>
@@ -30,7 +18,7 @@ export default class TimerButton extends React.Component {
 					<Button
 						variant="contained"
 						className={'btn'}
-						onClick={() => this.stopTimer()}
+						onClick={() => this.props.toggleStatusTimer(this.props.start, this.props.stop)}
 					>
 						Stop
 					</Button>

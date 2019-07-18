@@ -1,11 +1,16 @@
 import React from 'react';
-import Timer from 'containers/Timer/Timer';
+import { Provider } from 'react-redux';
 import Container from '@material-ui/core/Container';
 
+import Timer from 'containers/Timer/Timer';
+import store from 'store';
+
 const App = () => (
-	<Container >
-		<Timer />
-	</Container>
+	<Provider store={store}>
+		<Container>
+			<Timer />
+		</Container>
+	</Provider>
 );
 
 export default App;
