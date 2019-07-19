@@ -7,7 +7,7 @@ import Button from './Button/Button';
 import TaskInfo from './Tasks/Tabs';
 import './Timer.scss';
 
-import { setTask } from 'store/actions';
+import { setTask, getLocalStorage } from 'store/actions';
 import { connect } from 'react-redux';
 
 class Timer extends React.Component {
@@ -22,6 +22,8 @@ class Timer extends React.Component {
 	}
 
 	componentWillMount() {
+		console.log(this.props.getLocalStorage('timePassed'));
+
 		const isStartTimer = this._getItem('isStartTimer');
 		const timePassed = this._getItem('timePassed');
 
@@ -50,8 +52,8 @@ class Timer extends React.Component {
 			this.state.taskName === '' ? this._toggleIsOpenDialog(true) : this._addTaskLog(reset);
 			stop();
 			this._setItem('isStartTimer', 0);
-			this._setItem('timeStop', currentTime);
 			this._setItem('timePassed', this._getItem('timePassed') + (currentTime -  this._getItem('timeStart')));
+			this._setItem('timeStop', this._getItem('timeStart') + this._getItem('timePassed'));
 
 		} else {
 			start();
@@ -64,10 +66,12 @@ class Timer extends React.Component {
 	handleChangeTaskName = (event, reset = () => {}) => {
 		if (event.key === 'Enter' && event.target.value !== '') {
 			this._addTaskLog(reset);
+
+		} else {
+			this.setState({
+				taskName: event.target.value,
+			});
 		}
-		this.setState({
-			taskName: event.target.value,
-		});
 	};
 
 	_addTaskLog = (reset) => {
@@ -96,7 +100,7 @@ class Timer extends React.Component {
 			isOpenDialog: false,
 		});
 
-		console.log('reset: ', reset)
+		console.log('reset: ', reset);
 		reset();
 	};
 
@@ -180,7 +184,8 @@ const mapStateToProps = ({tasks}) => {
 };
 
 const mapDispatchToProps = {
-	setTask: setTask
+	setTask: setTask,
+	getLocalStorage: getLocalStorage,
 };
 
 export default connect(

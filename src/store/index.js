@@ -1,10 +1,18 @@
-import { createStore } from 'redux';
-
+import { createStore, applyMiddleware } from 'redux';
 import rootReducer from './reducers';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import createSagaMiddleware from 'redux-saga';
+import { watchSetLocalStorage } from './sagas';
+
+const sagaMiddleware = createSagaMiddleware();
 
 const store = createStore(
 	rootReducer,
-	window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+	composeWithDevTools(
+		applyMiddleware(sagaMiddleware),
+	)
 );
+
+sagaMiddleware.run(watchSetLocalStorage);
 
 export default store;
