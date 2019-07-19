@@ -7,6 +7,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 
 import TasksLog from './Log';
+import TasksChart from './Chart';
 
 function TabContainer(props) {
 	return (
@@ -55,8 +56,8 @@ export default function NavTabs() {
 					<LinkTab label="Tasks Chart" href="/tasks/chart" />
 				</Tabs>
 			</AppBar>
-			{value === 0 && <TasksLog/>}
-			{value === 1 && <TabContainer>Page Two</TabContainer>}
+			{value === 0 && <TasksLog />}
+			{value === 1 && <TasksChart />}
 		</div>
 	);
 }

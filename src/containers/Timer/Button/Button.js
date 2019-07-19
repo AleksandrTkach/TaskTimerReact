@@ -10,7 +10,7 @@ export default class TimerButton extends React.Component {
 					<Button
 						variant="contained"
 						className={'btn'}
-						onClick={() => this.props.toggleStatusTimer(this.props.start, this.props.stop)}
+						onClick={() => this.props.toggleStatusTimer(this.props.start, this.props.stop, this.props.reset)}
 					>
 						Start
 					</Button>
@@ -18,7 +18,7 @@ export default class TimerButton extends React.Component {
 					<Button
 						variant="contained"
 						className={'btn'}
-						onClick={() => this.props.toggleStatusTimer(this.props.start, this.props.stop)}
+						onClick={() => this.props.toggleStatusTimer(this.props.start, this.props.stop, this.props.reset)}
 					>
 						Stop
 					</Button>

@@ -45,7 +45,7 @@ const TasksRows = (tasks) => tasks.map((task, index) =>
 			</TableCell>
 			<TableCell align="left">{task.taskName}</TableCell>
 			<TableCell align="center">{getFormatTime(task.timeStart)}</TableCell>
-			<TableCell align="center">{getFormatTime(task.timeEnd)}</TableCell>
+			<TableCell align="center">{getFormatTime(task.timeStart) === getFormatTime(task.timeEnd) ? getFormatTime(task.timeEnd + 1000) : getFormatTime(task.timeEnd)}</TableCell>
 			<TableCell align="center">{getFormatTime(task.timeSpend)}</TableCell>
 			<TableCell align="center">
 				<Button variant="contained" style={styleButton}>
