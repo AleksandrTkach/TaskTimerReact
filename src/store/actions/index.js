@@ -1,31 +1,53 @@
-import {
-	SET_TASK,
-	GET_LOCAL_STORAGE,
-	REQUEST_LOCAL_STORAGE_SUCCESS,
-	REQUEST_LOCAL_STORAGE_ERROR,
-} from 'store/types';
+import * as types from 'store/types';
 
 export const setTask = payload => {
 	return {
-		type: SET_TASK,
+		type: types.SET_TASK,
 		payload: payload,
 	};
 };
 
 export const getLocalStorage = key => {
 	return {
-		type: GET_LOCAL_STORAGE,
+		type: types.GET_LOCAL_STORAGE,
 		key,
 	};
 };
 
-export const requestLocalStorageSuccess = value => {
+export const getLocalStorageSuccess = value => {
 	return {
-		type: REQUEST_LOCAL_STORAGE_SUCCESS,
+		type: types.GET_LOCAL_STORAGE_SUCCESS,
 		value,
 	};
 };
 
-export const requestLocalStorageError = () => {
-	return { type: REQUEST_LOCAL_STORAGE_ERROR };
+export const getLocalStorageError = (error) => {
+	return {
+		type: types.GET_LOCAL_STORAGE_ERROR,
+		error,
+	};
+};
+
+
+export const setLocalStorage = (key, value) => {
+	return {
+		type: types.SET_LOCAL_STORAGE,
+		key,
+		value,
+	};
+};
+
+
+export const setLocalStorageSuccess = value => {
+	return {
+		type: types.SET_LOCAL_STORAGE_SUCCESS,
+		value,
+	};
+};
+
+export const setLocalStorageError = (error) => {
+	return {
+		type: types.SET_LOCAL_STORAGE_ERROR,
+		error,
+	};
 };

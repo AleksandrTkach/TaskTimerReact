@@ -7,7 +7,7 @@ import Button from './Button/Button';
 import TaskInfo from './Tasks/Tabs';
 import './Timer.scss';
 
-import { setTask, getLocalStorage } from 'store/actions';
+import { setTask, getLocalStorage, setLocalStorage } from 'store/actions';
 import { connect } from 'react-redux';
 
 class Timer extends React.Component {
@@ -22,10 +22,10 @@ class Timer extends React.Component {
 	}
 
 	componentDidMount() {
-		// console.log(this.props.getLocalStorage('timePassed'));
+		this.props.setLocalStorage('isStartTimer', 1);
 		this.props.getLocalStorage('isStartTimer');
 
-		const isStartTimer = this.props.localStorage.value;
+		const isStartTimer = 0;
 		const timePassed = this._getItem('timePassed');
 
 		if (!isStartTimer) {
@@ -186,8 +186,9 @@ const mapStateToProps = ({tasks, localStorage}) => {
 };
 
 const mapDispatchToProps = {
-	setTask: setTask,
-	getLocalStorage: getLocalStorage,
+	setTask,
+	getLocalStorage,
+	setLocalStorage,
 };
 
 export default connect(

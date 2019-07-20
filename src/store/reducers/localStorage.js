@@ -1,22 +1,32 @@
-import {
-	REQUEST_LOCAL_STORAGE_SUCCESS,
-	REQUEST_LOCAL_STORAGE_ERROR,
-} from 'store/types';
+import * as types from 'store/types';
 
 const initialState = {
-	value: null,
+	isStartTimer: 0,
+	timePassed: 0,
+	timeStop: null,
+	timeStart: null,
 };
 
-const localStorage = (state = initialState, {type, value}) => {
-	switch (type) {
-		case REQUEST_LOCAL_STORAGE_SUCCESS:
+const localStorage = (state = initialState, action) => {
+	switch (action.type) {
+		case types.GET_LOCAL_STORAGE_SUCCESS:
 			return {
-				value,
+				[action.value.key]:action.value.value,
 			};
 
-		case REQUEST_LOCAL_STORAGE_ERROR:
+		case types.GET_LOCAL_STORAGE_ERROR:
 			return {
 				value: null,
+			};
+
+		case types.SET_LOCAL_STORAGE_SUCCESS:
+			return {
+				[action.value.key]:action.value.value,
+			};
+
+		case types.SET_LOCAL_STORAGE_ERROR:
+			return {
+				[action.key]: 'error',
 			};
 
 		default:
