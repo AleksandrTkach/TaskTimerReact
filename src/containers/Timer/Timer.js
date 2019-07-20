@@ -21,10 +21,11 @@ class Timer extends React.Component {
 		};
 	}
 
-	componentWillMount() {
-		console.log(this.props.getLocalStorage('timePassed'));
+	componentDidMount() {
+		// console.log(this.props.getLocalStorage('timePassed'));
+		this.props.getLocalStorage('isStartTimer');
 
-		const isStartTimer = this._getItem('isStartTimer');
+		const isStartTimer = this.props.localStorage.value;
 		const timePassed = this._getItem('timePassed');
 
 		if (!isStartTimer) {
@@ -177,9 +178,10 @@ class Timer extends React.Component {
 	}
 }
 
-const mapStateToProps = ({tasks}) => {
+const mapStateToProps = ({tasks, localStorage}) => {
 	return {
 		tasks,
+		localStorage,
 	};
 };
 
