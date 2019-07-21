@@ -4,8 +4,5 @@ import { watchGetLocalStorage } from './getLocalStorage';
 import { watchSetLocalStorage } from './setLocalStorage';
 
 export default function* rootSaga() {
-	yield all([
-		watchGetLocalStorage(),
-		watchSetLocalStorage(),
-	]);
-};
+	yield all([watchGetLocalStorage(), watchSetLocalStorage()]);
+}

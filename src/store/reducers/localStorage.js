@@ -11,7 +11,7 @@ const localStorage = (state = initialState, action) => {
 	switch (action.type) {
 		case types.GET_LOCAL_STORAGE_SUCCESS:
 			return {
-				[action.value.key]:action.value.value,
+				[action.value.key]: action.value.value,
 			};
 
 		case types.GET_LOCAL_STORAGE_ERROR:
@@ -21,7 +21,7 @@ const localStorage = (state = initialState, action) => {
 
 		case types.SET_LOCAL_STORAGE_SUCCESS:
 			return {
-				[action.value.key]:action.value.value,
+				[action.value.key]: action.value.value,
 			};
 
 		case types.SET_LOCAL_STORAGE_ERROR:
