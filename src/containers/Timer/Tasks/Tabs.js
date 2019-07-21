@@ -6,7 +6,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 
-import TasksLog from './Log';
+import TasksLog from './TableLog/TableLog';
 import TasksChart from './Chart';
 
 function TabContainer(props) {

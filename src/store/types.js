@@ -1,4 +1,5 @@
 export const SET_TASK = 'SET_TASK';
+export const REMOVE_TASK = 'REMOVE_TASK';
 
 export const GET_LOCAL_STORAGE = 'GET_LOCAL_STORAGE';
 export const GET_LOCAL_STORAGE_SUCCESS = 'GET_LOCAL_STORAGE_SUCCESS';

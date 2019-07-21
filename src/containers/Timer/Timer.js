@@ -17,7 +17,7 @@ class Timer extends React.Component {
 			taskName: '',
 			initialTime: 0,
 			isStartTimer: false,
-			isOpenDialog: false,
+			isOpenDialogNoName: false,
 		};
 	}
 
@@ -35,27 +35,34 @@ class Timer extends React.Component {
 			});
 		} else {
 			this.setState({
-				initialTime: (this._getCurrentTime() - this._getItem('timeStart')) + timePassed,
+				initialTime:
+					this._getCurrentTime() - this._getItem('timeStart') + timePassed,
 				isStartTimer,
 			});
 		}
 	}
 
 	toggleStatusTimer = (start, stop, reset) => {
-
 		this.setState({
-			isStartTimer: !this.state.isStartTimer
+			isStartTimer: !this.state.isStartTimer,
 		});
 
 		const currentTime = this._getCurrentTime();
 
 		if (this.state.isStartTimer) {
-			this.state.taskName === '' ? this._toggleIsOpenDialog(true) : this._addTaskLog(reset);
+			this.state.taskName === ''
+				? this._toggleDialogTaskNoName(true)
+				: this._addTaskLog(reset);
 			stop();
 			this._setItem('isStartTimer', 0);
-			this._setItem('timePassed', this._getItem('timePassed') + (currentTime -  this._getItem('timeStart')));
-			this._setItem('timeStop', this._getItem('timeStart') + this._getItem('timePassed'));
-
+			this._setItem(
+				'timePassed',
+				this._getItem('timePassed') + (currentTime - this._getItem('timeStart'))
+			);
+			this._setItem(
+				'timeStop',
+				this._getItem('timeStart') + this._getItem('timePassed')
+			);
 		} else {
 			start();
 			this._setItem('isStartTimer', 1);
@@ -63,11 +70,9 @@ class Timer extends React.Component {
 		}
 	};
 
-
 	handleChangeTaskName = (event, reset = () => {}) => {
 		if (event.key === 'Enter' && event.target.value !== '') {
 			this._addTaskLog(reset);
-
 		} else {
 			this.setState({
 				taskName: event.target.value,
@@ -75,7 +80,7 @@ class Timer extends React.Component {
 		}
 	};
 
-	_addTaskLog = (reset) => {
+	_addTaskLog = reset => {
 		const taskName = this.state.taskName;
 		const timeStart = this._getItem('timeStart');
 		let timeEnd = this._getItem('timeStop');
@@ -93,49 +98,43 @@ class Timer extends React.Component {
 			timeSpend,
 		});
 
-		console.log('_resetTimer');
 		this.setState({
 			taskName: '',
 			initialTime: 0,
 			isStartTimer: false,
-			isOpenDialog: false,
+			isOpenDialogNoName: false,
 		});
 
-		console.log('reset: ', reset);
 		reset();
 	};
 
-	_resetTimer = () => {
-		console.log('_resetTimer');
-
-	};
-
-	_toggleIsOpenDialog = status => this.setState({ isOpenDialog: status });
+	_toggleDialogTaskNoName = status =>
+		this.setState({ isOpenDialogNoName: status });
 	_getItem = name => Number(localStorage.getItem(name));
 	_setItem = (name, value) => localStorage.setItem(name, value);
 
 	_getCurrentTime = () => new Date().getTime();
-	_getFormatValue = (value, text = ':') => `${value < 10 ? `0${value}` : value}${text}`;
+	_getFormatValue = (value, text = ':') =>
+		`${value < 10 ? `0${value}` : value}${text}`;
 
 	render() {
 		const {
 			taskName,
 			initialTime,
 			isStartTimer,
-			isOpenDialog,
+			isOpenDialogNoName,
 		} = this.state;
 
 		return (
 			<>
 				<div className="timer__wrapper">
-
 					<Dialog
-						isOpenDialog={isOpenDialog}
-						clickDialogOpen={() => this._toggleIsOpenDialog(true)}
-						clickDialogClose={() => this._toggleIsOpenDialog(false)}
-						clickDialogSuccess={() => this._toggleIsOpenDialog(false)}
+						isOpenDialog={isOpenDialogNoName}
+						clickDialogOpen={() => this._toggleDialogTaskNoName(true)}
+						clickDialogClose={() => this._toggleDialogTaskNoName(false)}
+						clickDialogSuccess={() => this._toggleDialogTaskNoName(false)}
 						dialogTitle="Empty task name"
-						dialogContentText="You are trying close your task without name, please enter the name!"
+						dialogContentText="You are trying close your task without name, please enter the title and try gain!"
 					/>
 
 					<ReactTimer
@@ -148,7 +147,7 @@ class Timer extends React.Component {
 								<TextField
 									value={taskName}
 									onChange={this.handleChangeTaskName}
-									onKeyDown={(event) => this.handleChangeTaskName(event, reset)}
+									onKeyDown={event => this.handleChangeTaskName(event, reset)}
 									placeholder="Name of your task"
 									className="timer__input"
 								/>
@@ -161,24 +160,25 @@ class Timer extends React.Component {
 										formatValue={value => this._getFormatValue(value, '')}
 									/>
 								</Paper>
-								<Button start={start}
-												stop={stop}
-												reset={reset}
-												isStartTimer={isStartTimer}
-												toggleStatusTimer={this.toggleStatusTimer}
+								<Button
+									start={start}
+									stop={stop}
+									reset={reset}
+									isStartTimer={isStartTimer}
+									toggleStatusTimer={this.toggleStatusTimer}
 								/>
 							</>
 						)}
 					</ReactTimer>
 				</div>
 
-				<TaskInfo/>
+				<TaskInfo />
 			</>
 		);
 	}
 }
 
-const mapStateToProps = ({tasks, localStorage}) => {
+const mapStateToProps = ({ tasks, localStorage }) => {
 	return {
 		tasks,
 		localStorage,
@@ -193,5 +193,5 @@ const mapDispatchToProps = {
 
 export default connect(
 	mapStateToProps,
-	mapDispatchToProps,
+	mapDispatchToProps
 )(Timer);

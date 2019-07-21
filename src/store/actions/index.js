@@ -3,7 +3,14 @@ import * as types from 'store/types';
 export const setTask = payload => {
 	return {
 		type: types.SET_TASK,
-		payload: payload,
+		payload,
+	};
+};
+
+export const removeTask = index => {
+	return {
+		type: types.REMOVE_TASK,
+		index,
 	};
 };
 
