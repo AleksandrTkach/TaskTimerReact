@@ -7,42 +7,41 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 export default class FormDialog extends React.Component {
-
 	render() {
-
 		const {
 			dialogTitle = '',
 			dialogContentText,
 			isOpenDialog,
 			clickDialogClose,
 			clickDialogSuccess,
-			btnSuccessText='Close',
-			btnRejectText=null,
+			btnSuccessText = 'Close',
+			btnRejectText = null,
 		} = this.props;
 
 		return (
-				<Dialog open={isOpenDialog} onClose={clickDialogClose} aria-labelledby="form-dialog-title">
+			<Dialog
+				open={isOpenDialog}
+				onClose={clickDialogClose}
+				aria-labelledby="form-dialog-title"
+			>
+				<DialogTitle id="form-dialog-title">{dialogTitle}</DialogTitle>
 
-					<DialogTitle id="form-dialog-title">{dialogTitle}</DialogTitle>
+				<DialogContent>
+					<DialogContentText>{dialogContentText}</DialogContentText>
+					{this.props.children}
+				</DialogContent>
 
-					<DialogContent>
-						<DialogContentText>{dialogContentText}</DialogContentText>
-						{this.props.children}
-					</DialogContent>
-
-					<DialogActions>
-						{btnRejectText !== null
-							? (<Button onClick={clickDialogClose} color="primary">
-									{btnRejectText}
-								 </Button>)
-							: null
-						}
-						<Button onClick={clickDialogSuccess} color="primary">
-							{btnSuccessText}
+				<DialogActions>
+					{btnRejectText !== null ? (
+						<Button onClick={clickDialogClose} color="primary">
+							{btnRejectText}
 						</Button>
-					</DialogActions>
-
-				</Dialog>
+					) : null}
+					<Button onClick={clickDialogSuccess} color="primary">
+						{btnSuccessText}
+					</Button>
+				</DialogActions>
+			</Dialog>
 		);
 	}
 }

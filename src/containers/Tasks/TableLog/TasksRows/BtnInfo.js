@@ -35,24 +35,24 @@ class BtnInfo extends React.Component {
 					isOpenDialog={isOpenDialogInfo}
 					clickDialogClose={() => this._toggleDialogInfo(false)}
 					clickDialogSuccess={() => this._toggleDialogInfo(false)}
-					dialogTitle={`Task: ${task.taskName}`}
+					dialogTitle={`${task.taskName}`}
 				>
 					<Table>
 						<TableBody>
 							<TableRow>
-								<TableCell align="left"> Time start </TableCell>
+								<TableCell align="left"> Time start: </TableCell>
 								<TableCell align="left">
 									{getFormatTime(task.timeStart)}
 								</TableCell>
 							</TableRow>
 							<TableRow>
-								<TableCell align="left"> Time end </TableCell>
+								<TableCell align="left"> Time end: </TableCell>
 								<TableCell align="left">
 									{getFormatTime(task.timeEnd)}
 								</TableCell>
 							</TableRow>
 							<TableRow>
-								<TableCell align="left"> Time spend </TableCell>
+								<TableCell align="left"> Time spend: </TableCell>
 								<TableCell align="left">
 									{getFormatTime(task.timeSpend, true)}
 								</TableCell>
