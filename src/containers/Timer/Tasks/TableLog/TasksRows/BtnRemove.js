@@ -4,14 +4,21 @@ import Button from '@material-ui/core/Button';
 import { removeTask } from 'store/actions';
 import { connect } from 'react-redux';
 
+import Dialog from 'components/Dialog';
+
 class BtnRemove extends React.Component {
 	constructor() {
 		super();
 
-		this.state = {};
+		this.state = {
+			isOpenDialogRemove: false,
+		};
 	}
 
+	_toggleDialogRemove = status => this.setState({ isOpenDialogRemove: status });
+
 	render() {
+		const { isOpenDialogRemove } = this.state;
 		const { styleButton, taskIndex, removeTask } = this.props;
 
 		return (
@@ -19,10 +26,22 @@ class BtnRemove extends React.Component {
 				<Button
 					variant="contained"
 					style={styleButton}
-					onClick={() => removeTask(taskIndex)}
+					onClick={() => this._toggleDialogRemove(true)}
 				>
 					Delete
 				</Button>
+
+				<Dialog
+					isOpenDialog={isOpenDialogRemove}
+					clickDialogClose={() => this._toggleDialogRemove(false)}
+					clickDialogSuccess={() => {
+						this._toggleDialogRemove(false);
+						removeTask(taskIndex);
+					}}
+					btnRejectText="No"
+					btnSuccessText="Yes"
+					dialogTitle="You are sure?"
+				/>
 			</>
 		);
 	}

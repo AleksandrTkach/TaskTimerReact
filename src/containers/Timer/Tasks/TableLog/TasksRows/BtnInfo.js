@@ -54,7 +54,7 @@ class BtnInfo extends React.Component {
 							<TableRow>
 								<TableCell align="left"> Time spend </TableCell>
 								<TableCell align="left">
-									{getFormatTime(task.timeSpend)}
+									{getFormatTime(task.timeSpend, true)}
 								</TableCell>
 							</TableRow>
 						</TableBody>

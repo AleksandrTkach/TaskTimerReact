@@ -10,9 +10,10 @@ const tasks = (state = initState, action) => {
 			return tasks;
 
 		case REMOVE_TASK:
-			console.log(state,action.index);
-			// const newState = state.splice(action.index, 1);
-			return state;
+			let newTasks = [...state];
+			newTasks.splice(action.index, 1);
+			localStorage.setItem('tasks', JSON.stringify(newTasks));
+			return newTasks;
 
 		default:
 			return state;

@@ -17,6 +17,7 @@ export default class FormDialog extends React.Component {
 			clickDialogClose,
 			clickDialogSuccess,
 			btnSuccessText='Close',
+			btnRejectText=null,
 		} = this.props;
 
 		return (
@@ -30,6 +31,12 @@ export default class FormDialog extends React.Component {
 					</DialogContent>
 
 					<DialogActions>
+						{btnRejectText !== null
+							? (<Button onClick={clickDialogClose} color="primary">
+									{btnRejectText}
+								 </Button>)
+							: null
+						}
 						<Button onClick={clickDialogSuccess} color="primary">
 							{btnSuccessText}
 						</Button>

@@ -14,10 +14,13 @@ const styleButton = {
 };
 
 class TasksRows extends React.Component {
-	getFormatTime = value => moment.utc(+value).format('HH:mm:ss');
+	getFormatTime = (value, isUTC) => isUTC
+		? moment.utc(+value).format('HH:mm:ss')
+		: moment(+value).format('HH:mm:ss');
 
 	_getTimeEnd = task => {
-		return this.getFormatTime(task.timeStart) === this.getFormatTime(task.timeEnd)
+		return this.getFormatTime(task.timeStart) ===
+			this.getFormatTime(task.timeEnd)
 			? this.getFormatTime(task.timeEnd + 1000)
 			: this.getFormatTime(task.timeEnd);
 	};
@@ -33,18 +36,22 @@ class TasksRows extends React.Component {
 							{++index}
 						</TableCell>
 						<TableCell align="left">{task.taskName}</TableCell>
-						<TableCell align="center">{this.getFormatTime(task.timeStart)}</TableCell>
 						<TableCell align="center">
-							{this._getTimeEnd(task)}
+							{this.getFormatTime(task.timeStart)}
+						</TableCell>
+						<TableCell align="center">{this._getTimeEnd(task)}</TableCell>
+						<TableCell align="center">
+							{this.getFormatTime(task.timeSpend, true)}
 						</TableCell>
 						<TableCell align="center">
-							{this.getFormatTime(task.timeSpend)}
+							<BtnInfo
+								task={task}
+								styleButton={styleButton}
+								getFormatTime={this.getFormatTime}
+							/>
 						</TableCell>
 						<TableCell align="center">
-							<BtnInfo task={task} styleButton={styleButton} getFormatTime={this.getFormatTime}/>
-						</TableCell>
-						<TableCell align="center">
-							<BtnRemove taskIndex={index} styleButton={styleButton}/>
+							<BtnRemove taskIndex={--index} styleButton={styleButton} />
 						</TableCell>
 					</TableRow>
 				))}
@@ -59,6 +66,4 @@ const mapStateToProps = ({ tasks }) => {
 	};
 };
 
-export default connect(
-	mapStateToProps,
-)(TasksRows);
+export default connect(mapStateToProps)(TasksRows);
