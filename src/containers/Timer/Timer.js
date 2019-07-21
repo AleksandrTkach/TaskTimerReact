@@ -4,7 +4,7 @@ import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Dialog from 'components/Dialog';
 import Button from './Button/Button';
-import TaskInfo from './Tasks/Tabs';
+import TaskInfo from '../Tasks/Tabs';
 import './Timer.scss';
 
 import { setTask, getLocalStorage, setLocalStorage } from 'store/actions';
