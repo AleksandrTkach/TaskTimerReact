@@ -22,21 +22,21 @@ class Timer extends React.Component {
 	}
 
 	componentDidMount() {
-		this.props.setLocalStorage('isStartTimer', 1);
-		this.props.getLocalStorage('isStartTimer');
+		// this.props.setLocalStorage('isStartTimer', 1);
+		// this.props.getLocalStorage('isStartTimer');
 
-		const isStartTimer = 0;
-		const timePassed = this._getItem('timePassed');
+		const isStartTimer = this._getItem('isStartTimer');
+		const timeSpend = this._getItem('timeSpend');
 
 		if (!isStartTimer) {
 			this.setState({
-				initialTime: timePassed,
+				initialTime: timeSpend,
 				isStartTimer,
 			});
 		} else {
 			this.setState({
 				initialTime:
-					this._getCurrentTime() - this._getItem('timeStart') + timePassed,
+					this._getCurrentTime() - this._getItem('timeStart') + timeSpend,
 				isStartTimer,
 			});
 		}
@@ -50,19 +50,19 @@ class Timer extends React.Component {
 		const currentTime = this._getCurrentTime();
 
 		if (this.state.isStartTimer) {
-			this.state.taskName === ''
-				? this._toggleDialogTaskNoName(true)
-				: this._addTaskLog(reset);
 			stop();
 			this._setItem('isStartTimer', 0);
 			this._setItem(
-				'timePassed',
-				this._getItem('timePassed') + (currentTime - this._getItem('timeStart'))
+				'timeSpend',
+				this._getItem('timeSpend') + (currentTime - this._getItem('timeStart'))
 			);
 			this._setItem(
 				'timeStop',
-				this._getItem('timeStart') + this._getItem('timePassed')
+				this._getItem('timeStart') + this._getItem('timeSpend')
 			);
+			this.state.taskName === ''
+				? this._toggleDialogTaskNoName(true)
+				: this._addTaskLog(reset);
 		} else {
 			start();
 			this._setItem('isStartTimer', 1);
@@ -84,7 +84,7 @@ class Timer extends React.Component {
 		const taskName = this.state.taskName;
 		const timeStart = this._getItem('timeStart');
 		let timeEnd = this._getItem('timeStop');
-		let timeSpend = this._getItem('timePassed');
+		let timeSpend = this._getItem('timeSpend');
 
 		const sec = 1000;
 		if (timeSpend < sec && timeStart) {
@@ -104,6 +104,8 @@ class Timer extends React.Component {
 			isStartTimer: false,
 			isOpenDialogNoName: false,
 		});
+
+		this._setItem('timeSpend', 0);
 
 		reset();
 	};
