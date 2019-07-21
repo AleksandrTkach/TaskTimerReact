@@ -6,7 +6,7 @@ const initState = [
 	{
 		taskName: 'task 0',
 		timeStart: 1563658320000,
-		timeEnd: 1563665520000,
+		timeEnd:   1563665520000,
 		timeSpend: 1563665520000 - 1563658320000,
 	},
 	{

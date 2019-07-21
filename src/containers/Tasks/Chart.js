@@ -12,8 +12,6 @@ import {
 import { connect } from 'react-redux';
 import moment from 'moment';
 
-import BtnGenerate from './BtnGenerate';
-
 class Chart extends PureComponent {
 	constructor() {
 		super();
@@ -72,30 +70,27 @@ class Chart extends PureComponent {
 				}
 			}
 			columns[task.endHour].uv += task.endMin;
+
 		} else if (diffHour === 0) {
 			columns[task.endHour].uv += task.endMin - task.startMin;
 		}
 
-		this.setState({ columns });
+		this.setState({columns});
 	};
 
 	render() {
 		const { columns } = this.state;
 		return (
-			<>
-				<ResponsiveContainer width="100%" height={300}>
-					<BarChart data={columns}>
-						<CartesianGrid stroke="#ccc" />
-						<XAxis dataKey="name" />
-						<YAxis domain={[0, 60]} />
-						<Tooltip content={<CustomTooltip />} />
+			<ResponsiveContainer width="100%" height={300}>
+				<BarChart data={columns}>
+					<CartesianGrid stroke="#ccc" />
+					<XAxis dataKey="name" />
+					<YAxis domain={[0, 60]} />
+					<Tooltip content={<CustomTooltip />} />
 
-						<Bar type="monotone" dataKey="uv" barSize={30} fill="#8884d8" />
-					</BarChart>
-				</ResponsiveContainer>
-
-				<BtnGenerate />
-			</>
+					<Bar type="monotone" dataKey="uv" barSize={30} fill="#8884d8" />
+				</BarChart>
+			</ResponsiveContainer>
 		);
 	}
 }

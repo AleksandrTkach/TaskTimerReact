@@ -16,8 +16,10 @@ const styleButton = {
 const format = 'HH:mm:ss';
 
 class TasksRows extends React.Component {
-	getFormatTime = (value, isUTC) =>
-		isUTC ? moment.utc(+value).format(format) : moment(+value).format(format);
+
+	getFormatTime = (value, isUTC) => isUTC
+		? moment.utc(+value).format(format)
+		: moment(+value).format(format);
 
 	_getTimeEnd = task => {
 		return this.getFormatTime(task.timeStart) ===
