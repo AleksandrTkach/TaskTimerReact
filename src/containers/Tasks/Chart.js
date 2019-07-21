@@ -1,9 +1,16 @@
 import React, { PureComponent } from 'react';
-import { ResponsiveContainer, BarChart, Bar,  CartesianGrid, XAxis, YAxis } from 'recharts';
+import {
+	ResponsiveContainer,
+	BarChart,
+	Bar,
+	CartesianGrid,
+	XAxis,
+	YAxis,
+	Tooltip,
+} from 'recharts';
 
 import { connect } from 'react-redux';
 import moment from 'moment';
-
 
 class Chart extends PureComponent {
 	constructor() {
@@ -11,105 +18,99 @@ class Chart extends PureComponent {
 
 		this.state = {
 			columns: [],
-			tasks: []
+			tasks: [],
+			currentDay: moment().format('DD-MM-YYYY'),
 		};
 	}
 
-	async componentWillMount() {
-		await this.setState({tasks: this.props.tasks});
-
-	  this._getHoversAndMinutes();
-		this._setValuesChart();
+	async componentDidMount() {
+		await this._setNewFormatTasks();
+		await this._setValuesChart();
 	}
 
-	_getHoversAndMinutes = () => {
-		const tasks = this.state.tasks.map(task => {
+	_setNewFormatTasks = () => {
+		const tasks = this.props.tasks.map(task => {
 			return {
-				startHover: moment(task.timeStart).format('H'),
-				startMin: moment(task.timeStart).format('m'),
-				startSec: moment(task.timeStart).format('ss'),
-				endHover: moment(task.timeEnd).format('H'),
-				endMin: moment(task.timeEnd).format('m'),
-				endSec: moment(task.timeEnd).format('ss'),
+				startHour: Number(moment(task.timeStart).format('H')),
+				startMin: Number(moment(task.timeStart).format('m')),
+				startSec: Number(moment(task.timeStart).format('ss')),
+
+				endHour: Number(moment(task.timeEnd).format('H')),
+				endMin: Number(moment(task.timeEnd).format('m')),
+				endSec: Number(moment(task.timeEnd).format('ss')),
 			};
 		});
-		console.log('tasks: ', tasks, tasks.length);
 
-		const taskLength = tasks.length - 1;
-
-		for (let index = 0; index < taskLength; index++) {
-			let nextIndex = index + 1;
-
-			if (nextIndex < taskLength)
-
-			if (tasks[index].startHover === tasks[nextIndex].startHover) {
-				if (tasks[index].startMin === tasks[nextIndex].startMin) {
-					tasks[index] = {
-						startHover: tasks[index].startHover,
-						endHover: tasks[index].endHover,
-						startMin: String(Number(tasks[index].startMin) + 1),
-						endMin: tasks[index].endMin,
-					};
-				}
-			} else {
-				console.log('ne sovp: ');
-			}
-		}
-
-		// tasks.forEach((task, index, tasks) => {
-		// 	let nextIndex = index + 1;
-		// 	if (nextIndex < tasks.length)
-		// 		console.log(task.startHover, tasks[nextIndex].startHover)
-		// 	if (task.startHover === tasks[nextIndex].startHover) {
-		// 		console.log('ok: ');
-		// 	}
-		// });
-
-		this.setState({tasks});
-		console.log('tasks: ', tasks);
+		this.setState({ tasks });
 	};
 
-	_setValuesChart = () => {
+	_setValuesChart = async () => {
 		const columns = [];
-		for (let i = 0; i <= 24; i++) {
-
-			// for (const task of this.state.tasks) {
-			// 	if (task.startHover === )
-			// }
-
-			columns.push(	{
-				name: i, uv: 0, pv: 2400, amt: 2400,
+		for (let i = 0; i < 24; i++) {
+			columns.push({
+				name: i,
+				uv: 0,
 			});
 		}
 
-		this.setState({
-			columns,
-		});
+		for (const task of this.state.tasks) {
+			this._setValueColumn(task, [...columns]);
+		}
 	};
 
+	_setValueColumn = (task, columns) => {
+		const diffHour = task.endHour - task.startHour;
 
+		if (diffHour > 0) {
+			for (let hour = task.startHour; hour < task.endHour; hour++) {
+				if (task.startHour === hour) {
+					columns[hour].uv += 60 - task.startMin;
+				} else {
+					columns[hour].uv += 60;
+				}
+			}
+			columns[task.endHour].uv += task.endMin;
+
+		} else if (diffHour === 0) {
+			columns[task.endHour].uv += task.endMin - task.startMin;
+		}
+
+		this.setState({columns});
+	};
 
 	render() {
-		const {columns} = this.state;
+		const { columns } = this.state;
 		return (
 			<ResponsiveContainer width="100%" height={300}>
 				<BarChart data={columns}>
 					<CartesianGrid stroke="#ccc" />
 					<XAxis dataKey="name" />
-					<YAxis />
-					<Bar type="monotone" dataKey="uv" barSize={30} fill="#8884d8"/>
+					<YAxis domain={[0, 60]} />
+					<Tooltip content={<CustomTooltip />} />
+
+					<Bar type="monotone" dataKey="uv" barSize={30} fill="#8884d8" />
 				</BarChart>
 			</ResponsiveContainer>
 		);
 	}
 }
 
-const mapStateToProps = ({tasks}) => {
+const CustomTooltip = ({ payload, label, active }) => {
+	if (active && payload[0].value > 0) {
+		return (
+			<div className="custom-tooltip">
+				<p className="label">{`${payload[0].value}min`}</p>
+			</div>
+		);
+	}
+
+	return null;
+};
+
+const mapStateToProps = ({ tasks }) => {
 	return {
 		tasks,
 	};
 };
 
-export default connect(
-	mapStateToProps,
-)(Chart);
+export default connect(mapStateToProps)(Chart);
