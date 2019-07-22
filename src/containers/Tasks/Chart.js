@@ -106,7 +106,7 @@ class Chart extends PureComponent {
 
 const renderCustomBarLabel = ({ payload, x, y, width, height, value }) => {
 	return value > 0 ? (
-		<text x={x + width / 2} y={y} fill="#666" textAnchor="middle" dy={-6}>
+		<text x={x + width / 2} y={y} fill="#fff" textAnchor="middle" dy={16}>
 			{value}
 		</text>
 	) : null;

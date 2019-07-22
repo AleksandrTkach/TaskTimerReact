@@ -4,6 +4,8 @@ import Button from '@material-ui/core/Button/Button';
 import { connect } from 'react-redux';
 import { setTask, removeTask, resetTasks } from 'store/actions';
 
+import './BtnGenerate.scss';
+
 class BtnGenerate extends React.Component {
 	_generate = async () => {
 		await this.props.resetTasks();
@@ -36,7 +38,7 @@ class BtnGenerate extends React.Component {
 		return (
 			<Button
 				variant="contained"
-				className={'btn'}
+				className="btn btn__generate"
 				onClick={() => this._generate()}
 			>
 				Generate
