@@ -6,7 +6,6 @@ import {
 	CartesianGrid,
 	XAxis,
 	YAxis,
-	Tooltip,
 } from 'recharts';
 
 import { connect } from 'react-redux';
@@ -84,13 +83,18 @@ class Chart extends PureComponent {
 		return (
 			<>
 				<ResponsiveContainer width="100%" height={300}>
-					<BarChart data={columns}>
+					<BarChart data={columns.slice()}>
 						<CartesianGrid stroke="#ccc" />
 						<XAxis dataKey="name" />
 						<YAxis domain={[0, 60]} />
-						<Tooltip content={<CustomTooltip />} />
 
-						<Bar type="monotone" dataKey="uv" barSize={30} fill="#8884d8" />
+						<Bar
+							type="monotone"
+							dataKey="uv"
+							barSize={30}
+							fill="#8884d8"
+							label={renderCustomBarLabel}
+						/>
 					</BarChart>
 				</ResponsiveContainer>
 
@@ -100,16 +104,12 @@ class Chart extends PureComponent {
 	}
 }
 
-const CustomTooltip = ({ payload, label, active }) => {
-	if (active && payload[0].value > 0) {
-		return (
-			<div className="custom-tooltip">
-				<p className="label">{`${payload[0].value}min`}</p>
-			</div>
-		);
-	}
-
-	return null;
+const renderCustomBarLabel = ({ payload, x, y, width, height, value }) => {
+	return value > 0 ? (
+		<text x={x + width / 2} y={y} fill="#666" textAnchor="middle" dy={-6}>
+			{value}
+		</text>
+	) : null;
 };
 
 const mapStateToProps = ({ tasks }) => {

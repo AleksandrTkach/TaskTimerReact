@@ -14,6 +14,13 @@ export const removeTask = index => {
 	};
 };
 
+export const resetTasks = index => {
+	return {
+		type: types.RESET_TASKS,
+		index,
+	};
+};
+
 export const getLocalStorage = key => {
 	return {
 		type: types.GET_LOCAL_STORAGE,
