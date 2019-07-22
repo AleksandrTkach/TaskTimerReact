@@ -3,19 +3,9 @@ import Button from '@material-ui/core/Button/Button';
 
 import { connect } from 'react-redux';
 import { setTask, resetTasks, buildChart } from 'store/actions';
+import { MIN, TASK_DURATION, AMOUNT_TASKS } from 'utils/constants';
 
 import './BtnGenerate.scss';
-
-const AMOUNT_TASKS = {
-	MIN: 10,
-	MAX: 15,
-};
-const TASK_DURATION = {
-	MIN: 10,
-	MAX: 90,
-};
-
-const MIN = 1000 * 60;
 
 class BtnGenerate extends React.Component {
 	_generate = async () => {

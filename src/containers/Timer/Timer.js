@@ -6,7 +6,8 @@ import Dialog from 'components/Dialog';
 import Button from './Button/Button';
 import './Timer.scss';
 
-import { setTask, getLocalStorage, setLocalStorage } from 'store/actions';
+import { getLS, setLS, currentTime } from 'utils/utils';
+import { setTask } from 'store/actions';
 import { connect } from 'react-redux';
 
 class Timer extends React.Component {
@@ -21,24 +22,17 @@ class Timer extends React.Component {
 	}
 
 	componentDidMount() {
-		// this.props.setLocalStorage('isStartTimer', 1);
-		// this.props.getLocalStorage('isStartTimer');
+		const isStartTimer = getLS('isStartTimer');
+		let timeSpend = getLS('timeSpend');
 
-		const isStartTimer = this._getItem('isStartTimer');
-		const timeSpend = this._getItem('timeSpend');
+		const initialTime = isStartTimer
+			? currentTime() - getLS('timeStart') + timeSpend
+			: timeSpend;
 
-		if (!isStartTimer) {
-			this.setState({
-				initialTime: timeSpend,
-				isStartTimer,
-			});
-		} else {
-			this.setState({
-				initialTime:
-					this._getCurrentTime() - this._getItem('timeStart') + timeSpend,
-				isStartTimer,
-			});
-		}
+		this.setState({
+			initialTime,
+			isStartTimer,
+		});
 	}
 
 	toggleStatusTimer = (start, stop, reset) => {
@@ -46,26 +40,21 @@ class Timer extends React.Component {
 			isStartTimer: !this.state.isStartTimer,
 		});
 
-		const currentTime = this._getCurrentTime();
+		const timeSpend = getLS('timeSpend');
+		const timeStart = getLS('timeStart');
 
 		if (this.state.isStartTimer) {
 			stop();
-			this._setItem('isStartTimer', 0);
-			this._setItem(
-				'timeSpend',
-				this._getItem('timeSpend') + (currentTime - this._getItem('timeStart'))
-			);
-			this._setItem(
-				'timeStop',
-				this._getItem('timeStart') + this._getItem('timeSpend')
-			);
+			setLS('isStartTimer', 0);
+			setLS('timeSpend', timeSpend + (currentTime() - timeStart));
+			setLS('timeStop', timeStart + timeSpend);
 			this.state.taskName === ''
 				? this._toggleDialogTaskNoName(true)
 				: this._addTaskLog(reset);
 		} else {
 			start();
-			this._setItem('isStartTimer', 1);
-			this._setItem('timeStart', currentTime);
+			setLS('isStartTimer', 1);
+			setLS('timeStart', currentTime());
 		}
 	};
 
@@ -81,9 +70,9 @@ class Timer extends React.Component {
 
 	_addTaskLog = reset => {
 		const taskName = this.state.taskName;
-		const timeStart = this._getItem('timeStart');
-		let timeEnd = this._getItem('timeStop');
-		let timeSpend = this._getItem('timeSpend');
+		const timeStart = getLS('timeStart');
+		let timeEnd = getLS('timeStop');
+		let timeSpend = getLS('timeSpend');
 
 		const sec = 1000;
 		if (timeSpend < sec && timeStart) {
@@ -104,17 +93,13 @@ class Timer extends React.Component {
 			isOpenDialogNoName: false,
 		});
 
-		this._setItem('timeSpend', 0);
+		setLS('timeSpend', 0);
 
 		reset();
 	};
 
 	_toggleDialogTaskNoName = status =>
 		this.setState({ isOpenDialogNoName: status });
-	_getItem = name => Number(localStorage.getItem(name));
-	_setItem = (name, value) => localStorage.setItem(name, value);
-
-	_getCurrentTime = () => new Date().getTime();
 	_getFormatValue = (value, text = ':') =>
 		`${value < 10 ? `0${value}` : value}${text}`;
 
@@ -175,17 +160,14 @@ class Timer extends React.Component {
 	}
 }
 
-const mapStateToProps = ({ tasks, localStorage }) => {
+const mapStateToProps = ({ tasks }) => {
 	return {
 		tasks,
-		localStorage,
 	};
 };
 
 const mapDispatchToProps = {
 	setTask,
-	getLocalStorage,
-	setLocalStorage,
 };
 
 export default connect(
