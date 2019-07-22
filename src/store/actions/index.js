@@ -63,3 +63,22 @@ export const setLocalStorageError = error => {
 		error,
 	};
 };
+
+export const buildChart = () => {
+	return {
+		type: types.BUILD_CHART,
+	};
+};
+
+export const buildChartSuccess = chartColumns => {
+	return {
+		type: types.BUILD_CHART_SUCCESS,
+		chartColumns,
+	};
+};
+
+export const buildChartReset = () => {
+	return {
+		type: types.BUILD_CHART_RESET,
+	};
+};

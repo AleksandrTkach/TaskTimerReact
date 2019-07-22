@@ -9,88 +9,23 @@ import {
 } from 'recharts';
 
 import { connect } from 'react-redux';
-import moment from 'moment';
+import { buildChart } from 'store/actions';
 
 import BtnGenerate from './BtnGenerate';
 
 class Chart extends PureComponent {
-	constructor() {
-		super();
-
-		this.state = {
-			columns: [],
-			tasks: [],
-			currentDay: moment().format('DD-MM-YYYY'),
-		};
+	componentDidMount() {
+		this.props.buildChart();
 	}
-
-	async componentDidMount() {
-		await this._setNewFormatTasks();
-		await this._setValuesChart();
-	}
-
-	_setNewFormatTasks = () => {
-		const tasks = this.props.tasks.map(task => {
-			return {
-				startHour: Number(moment(task.timeStart).format('H')),
-				startMin: Number(moment(task.timeStart).format('m')),
-				startSec: Number(moment(task.timeStart).format('ss')),
-
-				endHour: Number(moment(task.timeEnd).format('H')),
-				endMin: Number(moment(task.timeEnd).format('m')),
-				endSec: Number(moment(task.timeEnd).format('ss')),
-			};
-		});
-
-		this.setState({ tasks });
-	};
-
-	_setValuesChart = async () => {
-		const columns = [];
-		for (let i = 0; i < 24; i++) {
-			columns.push({
-				name: i,
-				uv: 0,
-			});
-		}
-
-		let newColumns;
-		for (const task of this.state.tasks) {
-			newColumns = this._setValueColumn(task, [...columns]);
-		}
-		this.setState({
-			columns: newColumns,
-		});
-	};
-
-	_setValueColumn = (task, columns) => {
-		const diffHour = task.endHour - task.startHour;
-
-		if (diffHour > 0) {
-			for (let hour = task.startHour; hour < task.endHour; hour++) {
-				if (task.startHour === hour) {
-					columns[hour].uv += 60 - task.startMin;
-				} else {
-					columns[hour].uv += 60;
-				}
-			}
-			columns[task.endHour].uv += task.endMin;
-		} else if (diffHour === 0) {
-			columns[task.endHour].uv += task.endMin - task.startMin;
-		}
-
-		return columns;
-	};
 
 	render() {
 		return (
 			<>
 				<ResponsiveContainer width="100%" height={300}>
-					<BarChart data={this.state.columns}>
+					<BarChart data={this.props.chartColumns}>
 						<CartesianGrid stroke="#ccc" />
 						<XAxis dataKey="name" />
 						<YAxis domain={[0, 60]} />
-
 						<Bar
 							type="monotone"
 							dataKey="uv"
@@ -109,28 +44,35 @@ class Chart extends PureComponent {
 
 const renderLabel = ({ payload, x, y, width, height, value }) => {
 	if (value > 0) {
-		if (value > 5) {
-			return (
-				<text x={x + width / 2} y={y} fill="#fff" textAnchor="middle" dy={16}>
-					{value}
-				</text>
-			);
-		} else {
-			return (
-				<text x={x + width / 2} y={y} fill="#000" textAnchor="middle" dy={-6}>
-					{value}
-				</text>
-			);
+		let dy = 16;
+		let fill = '#fff';
+
+		if (value <= 5) {
+			dy = -6;
+			fill = '#000';
 		}
+
+		return (
+			<text x={x + width / 2} y={y} fill={fill} textAnchor="middle" dy={dy}>
+				{value}
+			</text>
+		);
 	} else {
 		return null;
 	}
 };
 
-const mapStateToProps = ({ tasks }) => {
+const mapStateToProps = ({ chartColumns }) => {
 	return {
-		tasks,
+		chartColumns,
 	};
 };
 
-export default connect(mapStateToProps)(Chart);
+const mapDispatchToProps = {
+	buildChart,
+};
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(Chart);

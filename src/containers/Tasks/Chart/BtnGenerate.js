@@ -2,16 +2,34 @@ import React from 'react';
 import Button from '@material-ui/core/Button/Button';
 
 import { connect } from 'react-redux';
-import { setTask, removeTask, resetTasks } from 'store/actions';
+import { setTask, resetTasks, buildChart } from 'store/actions';
 
 import './BtnGenerate.scss';
+
+const AMOUNT_TASKS = {
+	MIN: 10,
+	MAX: 15,
+};
+const TASK_DURATION = {
+	MIN: 10,
+	MAX: 90,
+};
+
+const MIN = 1000 * 60;
 
 class BtnGenerate extends React.Component {
 	_generate = async () => {
 		await this.props.resetTasks();
+		await this._createNewTasks();
+		this.props.buildChart();
+	};
 
+	_createNewTasks = async () => {
 		const date = new Date();
-		const amountTasks = this._getRandomNumber(10, 15);
+		const amountTasks = this._getRandomNumber(
+			AMOUNT_TASKS.MIN,
+			AMOUNT_TASKS.MAX
+		);
 		let timeStart = Number(
 			new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime()
 		);
@@ -30,7 +48,8 @@ class BtnGenerate extends React.Component {
 		}
 	};
 
-	_getNextTime = time => time + this._getRandomNumber(10, 90) * (1000 * 60);
+	_getNextTime = time =>
+		time + this._getRandomNumber(TASK_DURATION.MIN, TASK_DURATION.MAX) * MIN;
 	_getRandomNumber = (min, max) =>
 		Math.round(Math.random() * (max - min) + min);
 
@@ -47,19 +66,13 @@ class BtnGenerate extends React.Component {
 	}
 }
 
-const mapStateToProps = ({ tasks }) => {
-	return {
-		tasks,
-	};
-};
-
 const mapDispatchToProps = {
 	setTask,
-	removeTask,
 	resetTasks,
+	buildChart,
 };
 
 export default connect(
-	mapStateToProps,
+	null,
 	mapDispatchToProps
 )(BtnGenerate);
