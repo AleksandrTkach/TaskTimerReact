@@ -54,9 +54,13 @@ class Chart extends PureComponent {
 			});
 		}
 
+		let newColumns;
 		for (const task of this.state.tasks) {
-			this._setValueColumn(task, [...columns]);
+			newColumns = this._setValueColumn(task, [...columns]);
 		}
+		this.setState({
+			columns: newColumns,
+		});
 	};
 
 	_setValueColumn = (task, columns) => {
@@ -75,15 +79,14 @@ class Chart extends PureComponent {
 			columns[task.endHour].uv += task.endMin - task.startMin;
 		}
 
-		this.setState({ columns });
+		return columns;
 	};
 
 	render() {
-		const { columns } = this.state;
 		return (
 			<>
 				<ResponsiveContainer width="100%" height={300}>
-					<BarChart data={columns.slice()}>
+					<BarChart data={this.state.columns}>
 						<CartesianGrid stroke="#ccc" />
 						<XAxis dataKey="name" />
 						<YAxis domain={[0, 60]} />
@@ -93,7 +96,7 @@ class Chart extends PureComponent {
 							dataKey="uv"
 							barSize={30}
 							fill="#8884d8"
-							label={renderCustomBarLabel}
+							label={renderLabel}
 						/>
 					</BarChart>
 				</ResponsiveContainer>
@@ -104,12 +107,24 @@ class Chart extends PureComponent {
 	}
 }
 
-const renderCustomBarLabel = ({ payload, x, y, width, height, value }) => {
-	return value > 0 ? (
-		<text x={x + width / 2} y={y} fill="#fff" textAnchor="middle" dy={16}>
-			{value}
-		</text>
-	) : null;
+const renderLabel = ({ payload, x, y, width, height, value }) => {
+	if (value > 0) {
+		if (value > 5) {
+			return (
+				<text x={x + width / 2} y={y} fill="#fff" textAnchor="middle" dy={16}>
+					{value}
+				</text>
+			);
+		} else {
+			return (
+				<text x={x + width / 2} y={y} fill="#000" textAnchor="middle" dy={-6}>
+					{value}
+				</text>
+			);
+		}
+	} else {
+		return null;
+	}
 };
 
 const mapStateToProps = ({ tasks }) => {
