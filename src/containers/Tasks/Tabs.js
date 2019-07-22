@@ -41,9 +41,9 @@ class NavTabs extends React.Component {
 					</Tabs>
 				</AppBar>
 				<Switch>
-					<Route exact path="/" component={TasksLog} />
 					<Route path="/tasks/log" component={TasksLog} />
 					<Route path="/tasks/chart" component={TasksChart} />
+					<Route component={TasksLog} />
 				</Switch>
 			</div>
 		);
