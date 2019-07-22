@@ -7,7 +7,7 @@ import { Link, Route, Switch, withRouter } from 'react-router-dom';
 import './Tabs.scss';
 
 import TasksLog from './TableLog/TableLog';
-import TasksChart from './Chart';
+import TasksChart from './Chart/Chart';
 
 class NavTabs extends React.Component {
 	constructor() {
