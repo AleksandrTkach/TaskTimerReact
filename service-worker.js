@@ -11,13 +11,15 @@
  * See https://goo.gl/2aRDsh
  */
 
-importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
-
 importScripts(
-  "/TaskTimerReact/precache-manifest.0e4aa35210e8494b980cbb2f20bc8b48.js"
+  'https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js'
 );
 
-self.addEventListener('message', (event) => {
+importScripts(
+  '/TaskTimerReact/precache-manifest.20b6862a62b2db07a52f97cd706c90ad.js'
+);
+
+self.addEventListener('message', event => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
   }
@@ -33,7 +35,9 @@ workbox.core.clientsClaim();
 self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute(workbox.precaching.getCacheKeyForURL("/TaskTimerReact/index.html"), {
-  
-  blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
-});
+workbox.routing.registerNavigationRoute(
+  workbox.precaching.getCacheKeyForURL('/TaskTimerReact/index.html'),
+  {
+    blacklist: [/^\/_/, /\/[^\/]+\.[^\/]+$/],
+  }
+);
