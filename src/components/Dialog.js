@@ -20,18 +20,27 @@ class FormDialog extends React.Component {
 
     return (
       <Dialog
+        fullWidth={true}
+        maxWidth="sm"
         open={isOpenDialog}
         onClose={clickDialogClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">{dialogTitle}</DialogTitle>
+        <DialogTitle id="form-dialog-title" style={{ textAlign: 'center' }}>
+          {dialogTitle}
+        </DialogTitle>
 
         <DialogContent>
           <DialogContentText>{dialogContentText}</DialogContentText>
           {this.props.children}
         </DialogContent>
 
-        <DialogActions>
+        <DialogActions
+          style={{
+            justifyContent:
+              btnRejectText === null ? 'flex-end' : 'space-between',
+          }}
+        >
           {btnRejectText !== null ? (
             <Button onClick={clickDialogClose} color="primary">
               {btnRejectText}

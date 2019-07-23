@@ -49,7 +49,7 @@ class TaskInfo extends React.Component {
               </TableBody>
             </Table>
           </CardContent>
-          <CardActions>
+          <CardActions style={{ justifyContent: 'flex-end' }}>
             <Link to={ROUTER.tasksLog}>
               <Button size="small"> Back </Button>
             </Link>
