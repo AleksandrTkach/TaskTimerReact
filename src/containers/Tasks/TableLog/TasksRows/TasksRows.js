@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
-import moment from 'moment';
+
+import { getFormatTime } from 'utils/utils';
 
 import BtnInfo from './BtnInfo';
 import BtnRemove from './BtnRemove';
@@ -12,16 +13,11 @@ const styleButton = {
   borderRadius: 0,
 };
 
-const format = 'HH:mm:ss';
-
 class TasksRows extends React.Component {
-  getFormatTime = (value, isUTC) =>
-    isUTC ? moment.utc(+value).format(format) : moment(+value).format(format);
-
   _getTimeEnd = task =>
-    this.getFormatTime(task.timeStart) === this.getFormatTime(task.timeEnd)
-      ? this.getFormatTime(task.timeEnd + 1000)
-      : this.getFormatTime(task.timeEnd);
+    getFormatTime(task.timeStart) === getFormatTime(task.timeEnd)
+      ? getFormatTime(task.timeEnd + 1000)
+      : getFormatTime(task.timeEnd);
 
   render() {
     return (
@@ -33,17 +29,18 @@ class TasksRows extends React.Component {
             </TableCell>
             <TableCell align="left">{task.taskName}</TableCell>
             <TableCell align="center">
-              {this.getFormatTime(task.timeStart)}
+              {getFormatTime(task.timeStart)}
             </TableCell>
             <TableCell align="center">{this._getTimeEnd(task)}</TableCell>
             <TableCell align="center">
-              {this.getFormatTime(task.timeSpend, true)}
+              {getFormatTime(task.timeSpend, true)}
             </TableCell>
             <TableCell align="center">
               <BtnInfo
+                index={--index}
                 task={task}
                 styleButton={styleButton}
-                getFormatTime={this.getFormatTime}
+                getFormatTime={getFormatTime}
               />
             </TableCell>
             <TableCell align="center">

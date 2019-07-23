@@ -7,6 +7,8 @@ import Tab from '@material-ui/core/Tab';
 import TasksLog from './TableLog/TableLog';
 import TasksChart from './Chart/Chart';
 
+import { ROUTER } from 'utils/constants';
+
 import './Tabs.scss';
 
 class NavTabs extends React.Component {
@@ -14,35 +16,45 @@ class NavTabs extends React.Component {
     super();
 
     this.state = {
-      value: 0,
+      activeTabIndex: 0,
     };
   }
 
   componentDidMount() {
     this.setState({
-      value: this.props.location.pathname === '/tasks/chart' ? 1 : 0,
+      activeTabIndex:
+        this.props.location.pathname === ROUTER.tasksChart ? 1 : 0,
     });
   }
 
-  handleChange = (event, newValue) => {
+  handleChange = (event, activeTabIndex) => {
     this.setState({
-      value: newValue,
+      activeTabIndex,
     });
   };
 
   render() {
-    const { value } = this.state;
+    const { activeTabIndex } = this.state;
+
     return (
       <div className="tabs__wrapper">
         <AppBar position="static">
-          <Tabs variant="fullWidth" value={value} onChange={this.handleChange}>
-            <Tab label="Task Log" component={Link} to="/tasks/log" />
-            <Tab label="Task Chart" component={Link} to="/tasks/chart" />
+          <Tabs
+            variant="fullWidth"
+            value={activeTabIndex}
+            onChange={this.handleChange}
+          >
+            <Tab label="Task Log" component={Link} to={ROUTER.tasksLog} />
+            <Tab label="Task Chart" component={Link} to={ROUTER.tasksChart} />
           </Tabs>
         </AppBar>
         <Switch>
-          <Route path="/tasks/log" component={TasksLog} />
-          <Route path="/tasks/chart" component={TasksChart} />
+          <Route
+            exact
+            path={[ROUTER.tasksLog, ROUTER.home]}
+            component={TasksLog}
+          />
+          <Route exact path={ROUTER.tasksChart} component={TasksChart} />
         </Switch>
       </div>
     );

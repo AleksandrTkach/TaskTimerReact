@@ -1,66 +1,18 @@
 import React from 'react';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
+import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
-
-import Dialog from 'components/Dialog';
+import { ROUTER } from 'utils/constants';
 
 class BtnInfo extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      isOpenDialogInfo: false,
-    };
-  }
-
-  _toggleDialogInfo = status => this.setState({ isOpenDialogInfo: status });
-
   render() {
-    const { task, styleButton, getFormatTime } = this.props;
-    const { isOpenDialogInfo } = this.state;
+    const { styleButton, index } = this.props;
 
     return (
-      <>
-        <Button
-          variant="contained"
-          style={styleButton}
-          onClick={() => this._toggleDialogInfo(true)}
-        >
+      <Link to={`${ROUTER.taskInfo}${index}`}>
+        <Button variant="contained" style={styleButton}>
           Info
         </Button>
-        <Dialog
-          isOpenDialog={isOpenDialogInfo}
-          clickDialogClose={() => this._toggleDialogInfo(false)}
-          clickDialogSuccess={() => this._toggleDialogInfo(false)}
-          dialogTitle={`${task.taskName}`}
-        >
-          <Table>
-            <TableBody>
-              <TableRow>
-                <TableCell align="left"> Time start: </TableCell>
-                <TableCell align="left">
-                  {getFormatTime(task.timeStart)}
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell align="left"> Time end: </TableCell>
-                <TableCell align="left">
-                  {getFormatTime(task.timeEnd)}
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell align="left"> Time spend: </TableCell>
-                <TableCell align="left">
-                  {getFormatTime(task.timeSpend, true)}
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </Dialog>
-      </>
+      </Link>
     );
   }
 }

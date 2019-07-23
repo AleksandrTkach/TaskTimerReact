@@ -1,19 +1,42 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 
-import Router from 'components/Router';
+import TaskInfo from 'components/TaskInfo';
+import Timer from 'containers/Timer/Timer';
+import Tabs from 'containers/Tasks/Tabs';
+import NotFound from 'containers/NotFound';
+
+import { ROUTER } from 'utils/constants';
 import store from 'store';
 
-const App = () => (
-  <Provider store={store}>
-    <Container>
-      <BrowserRouter>
-        <Router />
-      </BrowserRouter>
-    </Container>
-  </Provider>
-);
+class App extends React.Component {
+  render() {
+    return (
+      <Provider store={store}>
+        <Container>
+          <BrowserRouter>
+            <Switch>
+              <Route
+                path={[ROUTER.home, ROUTER.tasksLog, ROUTER.tasksChart]}
+                exact
+              >
+                <Timer />
+                <Tabs />
+              </Route>
+
+              <Route path={`${ROUTER.taskInfo}:id`}>
+                <TaskInfo />
+              </Route>
+
+              <Route component={NotFound} />
+            </Switch>
+          </BrowserRouter>
+        </Container>
+      </Provider>
+    );
+  }
+}
 
 export default App;

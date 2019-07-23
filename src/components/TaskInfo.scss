@@ -1,0 +1,12 @@
+.task-info {
+  &__wrapper {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &__card {
+    width: 100%;
+    max-width: 400px;
+  }
+}
