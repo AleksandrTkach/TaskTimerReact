@@ -22,7 +22,7 @@ class Timer extends React.Component {
     };
   }
 
-  async componentDidMount() {
+  async componentWillMount() {
     const isStartTimer = getLS('isStartTimer');
     const timeSpend = getLS('timeSpend');
 
@@ -61,7 +61,9 @@ class Timer extends React.Component {
   };
 
   _addTaskLog = reset => {
-    const taskName = this.state.taskName;
+    const { taskName } = this.state;
+    const { setTask } = this.props;
+
     const timeStart = getLS('timeStart');
     let timeSpend = currentTime() - timeStart;
     let timeEnd = timeStart + timeSpend;
@@ -71,7 +73,7 @@ class Timer extends React.Component {
       timeSpend = sec;
     }
 
-    this.props.setTask({
+    setTask({
       taskName,
       timeStart,
       timeEnd,
