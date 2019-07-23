@@ -22,7 +22,6 @@ class TaskInfo extends React.Component {
   render() {
     const { tasks, match } = this.props;
     const task = tasks[match.params.id];
-    console.log('task: ', task);
 
     return (
       <>
