@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/TaskTimerReact/tasks/log/static/css/main.2ae52131.chunk.css",
-    "main.js": "/TaskTimerReact/tasks/log/static/js/main.041abec8.chunk.js",
-    "main.js.map": "/TaskTimerReact/tasks/log/static/js/main.041abec8.chunk.js.map",
-    "runtime~main.js": "/TaskTimerReact/tasks/log/static/js/runtime~main.4c89a493.js",
-    "runtime~main.js.map": "/TaskTimerReact/tasks/log/static/js/runtime~main.4c89a493.js.map",
-    "static/js/2.a8d561f7.chunk.js": "/TaskTimerReact/tasks/log/static/js/2.a8d561f7.chunk.js",
-    "static/js/2.a8d561f7.chunk.js.map": "/TaskTimerReact/tasks/log/static/js/2.a8d561f7.chunk.js.map",
-    "index.html": "/TaskTimerReact/tasks/log/index.html",
-    "precache-manifest.82a48b6b0751ba581ffc2b9f2565e299.js": "/TaskTimerReact/tasks/log/precache-manifest.82a48b6b0751ba581ffc2b9f2565e299.js",
-    "service-worker.js": "/TaskTimerReact/tasks/log/service-worker.js",
-    "static/css/main.2ae52131.chunk.css.map": "/TaskTimerReact/tasks/log/static/css/main.2ae52131.chunk.css.map"
+    "main.css": "/TaskTimerReact/static/css/main.4c635d3b.chunk.css",
+    "main.js": "/TaskTimerReact/static/js/main.2569f486.chunk.js",
+    "main.js.map": "/TaskTimerReact/static/js/main.2569f486.chunk.js.map",
+    "runtime~main.js": "/TaskTimerReact/static/js/runtime~main.02e0ce82.js",
+    "runtime~main.js.map": "/TaskTimerReact/static/js/runtime~main.02e0ce82.js.map",
+    "static/js/2.24fb0a4a.chunk.js": "/TaskTimerReact/static/js/2.24fb0a4a.chunk.js",
+    "static/js/2.24fb0a4a.chunk.js.map": "/TaskTimerReact/static/js/2.24fb0a4a.chunk.js.map",
+    "index.html": "/TaskTimerReact/index.html",
+    "precache-manifest.0e4aa35210e8494b980cbb2f20bc8b48.js": "/TaskTimerReact/precache-manifest.0e4aa35210e8494b980cbb2f20bc8b48.js",
+    "service-worker.js": "/TaskTimerReact/service-worker.js",
+    "static/css/main.4c635d3b.chunk.css.map": "/TaskTimerReact/static/css/main.4c635d3b.chunk.css.map"
   }
 }
