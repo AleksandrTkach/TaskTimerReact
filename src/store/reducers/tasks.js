@@ -1,4 +1,4 @@
-import { SET_TASK, REMOVE_TASK, RESET_TASKS } from '../types';
+import { SET_TASK, REMOVE_TASK, RESET_TASKS, REFRESH_TASKS } from '../types';
 import { getLS, setLS } from 'utils/utils';
 
 const initState = getLS('tasks', false) || [];
@@ -15,6 +15,9 @@ const tasks = (state = initState, action) => {
 			newTasks.splice(action.index, 1);
 			setLS('tasks', newTasks, false);
 			return newTasks;
+
+		case REFRESH_TASKS:
+			return action.tasks;
 
 		case RESET_TASKS:
 			return [];

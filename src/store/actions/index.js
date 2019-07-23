@@ -14,6 +14,13 @@ export const removeTask = index => {
 	};
 };
 
+export const refreshTasks = tasks => {
+	return {
+		type: types.REFRESH_TASKS,
+		tasks,
+	};
+};
+
 export const resetTasks = index => {
 	return {
 		type: types.RESET_TASKS,
