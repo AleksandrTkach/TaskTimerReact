@@ -1,17 +1,7 @@
 import { BUILD_CHART_SUCCESS, BUILD_CHART_RESET } from '../types';
+import { getDefaultChartColumns } from 'utils/utils';
 
-const getDefaultState = () => {
-	const columns = [];
-	for (let i = 0; i < 24; i++) {
-		columns.push({
-			name: i,
-			uv: 0,
-		});
-	}
-	return columns;
-};
-
-const initState = getDefaultState();
+const initState = getDefaultChartColumns();
 
 const chartColumns = (state = initState, action) => {
 	switch (action.type) {
@@ -19,7 +9,7 @@ const chartColumns = (state = initState, action) => {
 			return action.chartColumns;
 
 		case BUILD_CHART_RESET:
-			return getDefaultState();
+			return getDefaultChartColumns();
 
 		default:
 			return state;
