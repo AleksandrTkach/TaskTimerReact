@@ -15,15 +15,9 @@ const initState = getLS('tasks', false) || [];
 export const tasks = (state = initState, action) => {
   switch (action.type) {
     case SET_TASK:
-      setLS('tasks', [...state, action.payload], false);
       return [...state, action.payload];
 
     case REMOVE_TASK:
-      setLS(
-        'tasks',
-        [...state.slice(0, action.payload), ...state.slice(action.payload + 1)],
-        false
-      );
       return [
         ...state.slice(0, action.payload),
         ...state.slice(action.payload + 1),
