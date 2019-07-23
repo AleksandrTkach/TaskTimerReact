@@ -44,7 +44,7 @@ class TasksRows extends React.Component {
               />
             </TableCell>
             <TableCell align="center">
-              <BtnRemove taskIndex={--index} styleButton={styleButton} />
+              <BtnRemove taskIndex={index} styleButton={styleButton} />
             </TableCell>
           </TableRow>
         ))}

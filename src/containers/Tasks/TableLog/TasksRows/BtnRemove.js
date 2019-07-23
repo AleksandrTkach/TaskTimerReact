@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 
 import { connect } from 'react-redux';
-import { removeTask } from 'store/actions';
+import { removeTask } from 'store/modules/tasks';
 
 import Dialog from 'components/Dialog';
 

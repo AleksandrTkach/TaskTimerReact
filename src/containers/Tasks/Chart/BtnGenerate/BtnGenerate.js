@@ -2,7 +2,8 @@ import React from 'react';
 import Button from '@material-ui/core/Button/Button';
 
 import { connect } from 'react-redux';
-import { setTask, resetTasks, buildChart, refreshTasks } from 'store/actions';
+import { buildChart } from 'store/modules/chart';
+import { setTask, resetTasks, refreshTasks } from 'store/modules/tasks';
 import { generateNewTasks, setLS } from 'utils/utils';
 
 import './BtnGenerate.scss';

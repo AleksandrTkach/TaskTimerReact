@@ -5,7 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button/Button';
 
 import { connect } from 'react-redux';
-import { setTask } from 'store/actions';
+import { setTask } from 'store/modules/tasks';
 import { getLS, setLS, currentTime } from 'utils/utils';
 import Dialog from 'components/Dialog';
 

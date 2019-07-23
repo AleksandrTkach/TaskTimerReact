@@ -156,3 +156,17 @@ export const getDefaultChartColumns = () => {
   }
   return columns;
 };
+
+/**
+ * Helper for actions
+ *
+ * @param type
+ * @param payload
+ * @returns {{type: *, payload: *}}
+ */
+export const action = (type, payload) => {
+  return {
+    type,
+    payload,
+  };
+};

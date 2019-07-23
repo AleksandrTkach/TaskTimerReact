@@ -9,7 +9,7 @@ import {
 } from 'recharts';
 
 import { connect } from 'react-redux';
-import { buildChart } from 'store/actions';
+import { buildChart } from 'store/modules/chart';
 
 import BtnGenerate from './BtnGenerate/BtnGenerate';
 

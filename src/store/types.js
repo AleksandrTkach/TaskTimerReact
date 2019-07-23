@@ -1,8 +1,0 @@
-export const SET_TASK = 'SET_TASK';
-export const REMOVE_TASK = 'REMOVE_TASK';
-export const REFRESH_TASKS = 'REFRESH_TASKS';
-export const RESET_TASKS = 'RESET_TASKS';
-
-export const BUILD_CHART = 'BUILD_CHART';
-export const BUILD_CHART_SUCCESS = 'BUILD_CHART_SUCCESS';
-export const BUILD_CHART_RESET = 'BUILD_CHART_RESET';
