@@ -2,13 +2,14 @@ import React from 'react';
 import ReactTimer from 'react-compound-timer';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
-import Dialog from 'components/Dialog';
-import Button from './Button/Button';
-import './Timer.scss';
+import Button from '@material-ui/core/Button/Button';
 
-import { getLS, setLS, currentTime } from 'utils/utils';
-import { setTask } from 'store/actions';
 import { connect } from 'react-redux';
+import { setTask } from 'store/actions';
+import { getLS, setLS, currentTime } from 'utils/utils';
+import Dialog from 'components/Dialog';
+
+import './Timer.scss';
 
 class Timer extends React.Component {
   constructor() {
@@ -21,7 +22,7 @@ class Timer extends React.Component {
     };
   }
 
-  async componentWillMount() {
+  async componentDidMount() {
     const isStartTimer = getLS('isStartTimer');
     const timeSpend = getLS('timeSpend');
 
@@ -124,7 +125,6 @@ class Timer extends React.Component {
               <TextField
                 value={taskName}
                 onChange={this.handleChangeTaskName}
-                // onKeyDown={event => this.handleChangeTaskName(event, reset)}
                 placeholder="Name of your task"
                 className="timer__input"
               />
@@ -138,12 +138,12 @@ class Timer extends React.Component {
                 />
               </Paper>
               <Button
-                start={start}
-                stop={stop}
-                reset={reset}
-                isStartTimer={isStartTimer}
-                toggleStatusTimer={this.toggleStatusTimer}
-              />
+                variant="contained"
+                className="btn"
+                onClick={() => this.toggleStatusTimer(start, stop, reset)}
+              >
+                {!isStartTimer ? 'Start' : 'Stop'}
+              </Button>
             </>
           )}
         </ReactTimer>

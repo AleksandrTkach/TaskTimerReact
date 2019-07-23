@@ -11,7 +11,7 @@ import {
 import { connect } from 'react-redux';
 import { buildChart } from 'store/actions';
 
-import BtnGenerate from './BtnGenerate';
+import BtnGenerate from './BtnGenerate/BtnGenerate';
 
 class Chart extends PureComponent {
   componentDidMount() {

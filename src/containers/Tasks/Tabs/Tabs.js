@@ -4,8 +4,8 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
-import TasksLog from './TableLog/TableLog';
-import TasksChart from './Chart/Chart';
+import TasksLog from '../TableLog/TableLog';
+import TasksChart from '../Chart/Chart';
 
 import { ROUTER } from 'utils/constants';
 

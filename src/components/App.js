@@ -5,7 +5,7 @@ import Container from '@material-ui/core/Container';
 
 import TaskInfo from 'components/TaskInfo';
 import Timer from 'containers/Timer/Timer';
-import Tabs from 'containers/Tasks/Tabs';
+import Tabs from 'containers/Tasks/Tabs/Tabs';
 import NotFound from 'containers/NotFound';
 
 import { ROUTER } from 'utils/constants';
