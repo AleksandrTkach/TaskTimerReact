@@ -1,5 +1,5 @@
 import { takeEvery, select } from 'redux-saga/effects';
-import { action, getLS, setLS } from 'utils/utils';
+import { action, setLS } from 'utils/utils';
 import { SET_TASK, REMOVE_TASK } from 'store/modules/tasks';
 
 function* setTask() {

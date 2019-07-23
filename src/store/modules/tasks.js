@@ -1,4 +1,4 @@
-import { action, getLS, setLS } from 'utils/utils';
+import { action, getLS } from 'utils/utils';
 
 export const SET_TASK = 'SET_TASK';
 export const REMOVE_TASK = 'REMOVE_TASK';
