@@ -13,55 +13,55 @@ import TasksNotFound from './TasksNotFound';
 import TasksRows from './TasksRows/TasksRows';
 
 const useStyles = makeStyles(() => ({
-	root: {
-		width: '100%',
-		overflowX: 'auto',
-		borderRadius: 0,
-	},
-	table: {
-		minWidth: 650,
-	},
+  root: {
+    width: '100%',
+    overflowX: 'auto',
+    borderRadius: 0,
+  },
+  table: {
+    minWidth: 650,
+  },
 }));
 
 const tableHeads = [
-	'№',
-	'Tasks',
-	'Time start',
-	'Time end',
-	'Time Spend',
-	'Info',
-	'Delete',
+  '№',
+  'Tasks',
+  'Time start',
+  'Time end',
+  'Time Spend',
+  'Info',
+  'Delete',
 ];
 
 const TableLog = ({ tasks }) => {
-	const classes = useStyles();
+  const classes = useStyles();
 
-	return (
-		<>
-			<Paper className={classes.root}>
-				<Table className={classes.table}>
-					<TableHead>
-						<TableRow>
-							{tableHeads.map((tableHead, index) => (
-								<TableCell key={`task-header-${index}`} align="center">
-									{tableHead}
-								</TableCell>
-							))}
-						</TableRow>
-					</TableHead>
-					<TableBody>
-						{tasks.length ? <TasksRows /> : <TasksNotFound />}
-					</TableBody>
-				</Table>
-			</Paper>
-		</>
-	);
+  return (
+    <>
+      <Paper className={classes.root}>
+        <Table className={classes.table}>
+          <TableHead>
+            <TableRow>
+              {tableHeads.map((tableHead, index) => (
+                <TableCell key={`task-header-${index}`} align="center">
+                  {tableHead}
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {tasks.length ? <TasksRows /> : <TasksNotFound />}
+          </TableBody>
+        </Table>
+      </Paper>
+    </>
+  );
 };
 
 const mapStateToProps = ({ tasks }) => {
-	return {
-		tasks,
-	};
+  return {
+    tasks,
+  };
 };
 
 export default connect(mapStateToProps)(TableLog);

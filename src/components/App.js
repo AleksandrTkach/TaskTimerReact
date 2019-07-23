@@ -3,19 +3,17 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 
-import Timer from 'containers/Timer/Timer';
-import TaskInfo from 'containers/Tasks/Tabs';
+import Router from 'components/Router';
 import store from 'store';
 
 const App = () => (
-	<Provider store={store}>
-		<Container>
-			<BrowserRouter>
-				<Timer />
-				<TaskInfo />
-			</BrowserRouter>
-		</Container>
-	</Provider>
+  <Provider store={store}>
+    <Container>
+      <BrowserRouter>
+        <Router />
+      </BrowserRouter>
+    </Container>
+  </Provider>
 );
 
 export default App;

@@ -10,44 +10,43 @@ import TasksChart from './Chart/Chart';
 import './Tabs.scss';
 
 class NavTabs extends React.Component {
-	constructor() {
-		super();
+  constructor() {
+    super();
 
-		this.state = {
-			value: 0,
-		};
-	}
+    this.state = {
+      value: 0,
+    };
+  }
 
-	componentDidMount() {
-		this.setState({
-			value: this.props.location.pathname === '/tasks/chart' ? 1 : 0,
-		});
-	}
+  componentDidMount() {
+    this.setState({
+      value: this.props.location.pathname === '/tasks/chart' ? 1 : 0,
+    });
+  }
 
-	handleChange = (event, newValue) => {
-		this.setState({
-			value: newValue,
-		});
-	};
+  handleChange = (event, newValue) => {
+    this.setState({
+      value: newValue,
+    });
+  };
 
-	render() {
-		const { value } = this.state;
-		return (
-			<div className="tabs__wrapper">
-				<AppBar position="static">
-					<Tabs variant="fullWidth" value={value} onChange={this.handleChange}>
-						<Tab label="Task Log" component={Link} to="/tasks/log" />
-						<Tab label="Task Chart" component={Link} to="/tasks/chart" />
-					</Tabs>
-				</AppBar>
-				<Switch>
-					<Route path="/tasks/log" component={TasksLog} />
-					<Route path="/tasks/chart" component={TasksChart} />
-					<Route component={TasksLog} />
-				</Switch>
-			</div>
-		);
-	}
+  render() {
+    const { value } = this.state;
+    return (
+      <div className="tabs__wrapper">
+        <AppBar position="static">
+          <Tabs variant="fullWidth" value={value} onChange={this.handleChange}>
+            <Tab label="Task Log" component={Link} to="/tasks/log" />
+            <Tab label="Task Chart" component={Link} to="/tasks/chart" />
+          </Tabs>
+        </AppBar>
+        <Switch>
+          <Route path="/tasks/log" component={TasksLog} />
+          <Route path="/tasks/chart" component={TasksChart} />
+        </Switch>
+      </div>
+    );
+  }
 }
 
 export default withRouter(NavTabs);
