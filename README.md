@@ -23,4 +23,4 @@ $ npm run start
 $ npm run test
 ```
 
-[GitHub Pages](https://aleksandrtkach.github.io/SquaresReact/)
+[GitHub Pages](https://aleksandrtkach.github.io/TaskTimerReact/)
