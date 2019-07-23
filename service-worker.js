@@ -16,7 +16,7 @@ importScripts(
 );
 
 importScripts(
-	'/TaskTimerReact/precache-manifest.da6859f252de16e44349839cd4afa491.js'
+	'/TaskTimerReact/precache-manifest.483845f02a71fbb68355b10d27869a60.js'
 );
 
 self.addEventListener('message', event => {
