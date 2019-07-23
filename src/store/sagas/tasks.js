@@ -1,11 +1,11 @@
 import { takeEvery, select } from 'redux-saga/effects';
-import { action, setLS } from 'utils/utils';
+import { setLS } from 'utils/utils';
 import { SET_TASK, REMOVE_TASK } from 'store/modules/tasks';
 
 function* setTask() {
   try {
     const { tasks } = yield select();
-    setLS('tasks', [...tasks, action.payload], false);
+    setLS('tasks', tasks, false);
   } catch (error) {
     console.log('error: ', error);
   }
@@ -13,17 +13,15 @@ function* setTask() {
 function* removeTask() {
   try {
     const { tasks } = yield select();
-    setLS(
-      'tasks',
-      [...tasks.slice(0, action.payload), ...tasks.slice(action.payload + 1)],
-      false
-    );
+    setLS('tasks', tasks, false);
   } catch (error) {
     console.log('error: ', error);
   }
 }
 
-export function* watchTasks() {
+export function* watchSetTasks() {
   yield takeEvery(SET_TASK, setTask);
+}
+export function* watchRemoveTasks() {
   yield takeEvery(REMOVE_TASK, removeTask);
 }
