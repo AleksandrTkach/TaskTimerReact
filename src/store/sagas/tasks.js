@@ -4,6 +4,7 @@ import { SET_TASK, REMOVE_TASK } from 'store/modules/tasks';
 
 function* setTask() {
   try {
+    console.log('setTask');
     const { tasks } = yield select();
     setLS('tasks', tasks, false);
   } catch (error) {
@@ -12,6 +13,8 @@ function* setTask() {
 }
 function* removeTask() {
   try {
+    console.log('removeTask');
+
     const { tasks } = yield select();
     setLS('tasks', tasks, false);
   } catch (error) {
@@ -19,9 +22,7 @@ function* removeTask() {
   }
 }
 
-export function* watchSetTasks() {
+export function* watchTasks() {
   yield takeEvery(SET_TASK, setTask);
-}
-export function* watchRemoveTasks() {
   yield takeEvery(REMOVE_TASK, removeTask);
 }
