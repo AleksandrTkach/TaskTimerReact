@@ -1,8 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
-
-import { connect } from 'react-redux';
 import moment from 'moment';
 
 import BtnInfo from './BtnInfo';
@@ -19,19 +18,15 @@ class TasksRows extends React.Component {
 	getFormatTime = (value, isUTC) =>
 		isUTC ? moment.utc(+value).format(format) : moment(+value).format(format);
 
-	_getTimeEnd = task => {
-		return this.getFormatTime(task.timeStart) ===
-			this.getFormatTime(task.timeEnd)
+	_getTimeEnd = task =>
+		this.getFormatTime(task.timeStart) === this.getFormatTime(task.timeEnd)
 			? this.getFormatTime(task.timeEnd + 1000)
 			: this.getFormatTime(task.timeEnd);
-	};
 
 	render() {
-		const { tasks } = this.props;
-
 		return (
 			<>
-				{tasks.map((task, index) => (
+				{this.props.tasks.map((task, index) => (
 					<TableRow key={`task-body-${index}`}>
 						<TableCell component="th" scope="row">
 							{++index}

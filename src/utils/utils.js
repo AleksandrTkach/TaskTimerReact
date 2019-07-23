@@ -1,18 +1,42 @@
 import { MIN, TASK_DURATION, AMOUNT_TASKS } from 'utils/constants';
 import moment from 'moment';
 
+/**
+ * Get value from LocalStorage
+ *
+ * @param key
+ * @param isNumber
+ * @returns {number}
+ */
 export const getLS = (key, isNumber = true) =>
 	isNumber
 		? Number(localStorage.getItem(key))
 		: JSON.parse(localStorage.getItem(key));
 
+/**
+ * Set value from LocalStorage
+ *
+ * @param key
+ * @param value
+ * @param isNumber
+ */
 export const setLS = (key, value, isNumber = true) =>
 	isNumber
 		? localStorage.setItem(key, value)
 		: localStorage.setItem(key, JSON.stringify(value));
 
+/**
+ * Get current time
+ *
+ * @returns {number}
+ */
 export const currentTime = () => new Date().getTime();
 
+/**
+ * Generate new tasks
+ *
+ * @returns {Array}
+ */
 export const generateNewTasks = () => {
 	const date = new Date();
 	const amountTasks = _getRandomNumber(AMOUNT_TASKS.MIN, AMOUNT_TASKS.MAX);
@@ -36,13 +60,34 @@ export const generateNewTasks = () => {
 	return newTasks;
 };
 
+/**
+ * Get random time for task
+ * @param time
+ * @returns {*}
+ * @private
+ */
 function _getNextTime(time) {
 	return time + _getRandomNumber(TASK_DURATION.MIN, TASK_DURATION.MAX) * MIN;
 }
+
+/**
+ * Get random number
+ *
+ * @param min
+ * @param max
+ * @returns {number}
+ * @private
+ */
 function _getRandomNumber(min, max) {
 	return Math.round(Math.random() * (max - min) + min);
 }
 
+/**
+ * Convert format tasks for chart
+ *
+ * @param tasks
+ * @returns {*}
+ */
 export const changeTaskFormat = tasks =>
 	tasks.map(task => {
 		return {
@@ -56,6 +101,13 @@ export const changeTaskFormat = tasks =>
 		};
 	});
 
+/**
+ * Set columns for chart
+ *
+ * @param chartColumns
+ * @param newTasksFormat
+ * @returns {Array}
+ */
 export const setChartColumns = (chartColumns, newTasksFormat) => {
 	let columns = [...chartColumns];
 
@@ -79,6 +131,11 @@ export const setChartColumns = (chartColumns, newTasksFormat) => {
 	return columns;
 };
 
+/**
+ * Get empty columns for chart
+ *
+ * @returns {Array}
+ */
 export const getDefaultChartColumns = () => {
 	const columns = [];
 	for (let i = 0; i < 24; i++) {

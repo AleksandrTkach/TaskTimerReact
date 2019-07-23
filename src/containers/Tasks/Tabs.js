@@ -1,13 +1,13 @@
 import React from 'react';
+import { Link, Route, Switch, withRouter } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import { Link, Route, Switch, withRouter } from 'react-router-dom';
-
-import './Tabs.scss';
 
 import TasksLog from './TableLog/TableLog';
 import TasksChart from './Chart/Chart';
+
+import './Tabs.scss';
 
 class NavTabs extends React.Component {
 	constructor() {

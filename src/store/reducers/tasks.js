@@ -12,12 +12,12 @@ const tasks = (state = initState, action) => {
 
 		case REMOVE_TASK:
 			let newTasks = [...state];
-			newTasks.splice(action.index, 1);
+			newTasks.splice(action.payload, 1);
 			setLS('tasks', newTasks, false);
 			return newTasks;
 
 		case REFRESH_TASKS:
-			return action.tasks;
+			return action.payload;
 
 		case RESET_TASKS:
 			return [];

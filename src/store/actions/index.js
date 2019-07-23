@@ -1,48 +1,18 @@
 import * as types from 'store/types';
 
-export const setTask = payload => {
+export const setTask = payload => action(types.SET_TASK, payload);
+export const removeTask = index => action(types.REMOVE_TASK, index);
+export const refreshTasks = tasks => action(types.REFRESH_TASKS, tasks);
+export const resetTasks = index => action(types.RESET_TASKS, index);
+
+export const buildChart = () => action(types.BUILD_CHART);
+export const buildChartReset = () => action(types.BUILD_CHART_RESET);
+export const buildChartSuccess = chartColumns =>
+	action(types.BUILD_CHART_SUCCESS, chartColumns);
+
+const action = (type, payload) => {
 	return {
-		type: types.SET_TASK,
+		type,
 		payload,
-	};
-};
-
-export const removeTask = index => {
-	return {
-		type: types.REMOVE_TASK,
-		index,
-	};
-};
-
-export const refreshTasks = tasks => {
-	return {
-		type: types.REFRESH_TASKS,
-		tasks,
-	};
-};
-
-export const resetTasks = index => {
-	return {
-		type: types.RESET_TASKS,
-		index,
-	};
-};
-
-export const buildChart = () => {
-	return {
-		type: types.BUILD_CHART,
-	};
-};
-
-export const buildChartSuccess = chartColumns => {
-	return {
-		type: types.BUILD_CHART_SUCCESS,
-		chartColumns,
-	};
-};
-
-export const buildChartReset = () => {
-	return {
-		type: types.BUILD_CHART_RESET,
 	};
 };

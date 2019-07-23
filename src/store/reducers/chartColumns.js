@@ -6,7 +6,7 @@ const initState = getDefaultChartColumns();
 const chartColumns = (state = initState, action) => {
 	switch (action.type) {
 		case BUILD_CHART_SUCCESS:
-			return action.chartColumns;
+			return action.payload;
 
 		case BUILD_CHART_RESET:
 			return getDefaultChartColumns();
