@@ -14,15 +14,7 @@ import './Timer.scss';
 class Timer extends React.Component {
   constructor() {
     super();
-    this.state = {
-      taskName: '',
-      initialTime: 0,
-      isStartTimer: false,
-      isOpenDialogNoName: false,
-    };
-  }
 
-  async componentWillMount() {
     const isStartTimer = getLS('isStartTimer');
     const timeSpend = getLS('timeSpend');
 
@@ -30,10 +22,12 @@ class Timer extends React.Component {
       ? currentTime() - getLS('timeStart') + timeSpend
       : timeSpend;
 
-    await this.setState({
-      initialTime,
-      isStartTimer,
-    });
+    this.state = {
+      taskName: '',
+      initialTime: initialTime || 0,
+      isStartTimer: isStartTimer || false,
+      isOpenDialogNoName: false,
+    };
   }
 
   toggleStatusTimer = (start, stop, reset) => {
@@ -41,8 +35,9 @@ class Timer extends React.Component {
       if (this.state.taskName === '') {
         this._toggleDialogTaskNoName(true);
       } else {
+        this._addTaskLog();
         stop();
-        this._addTaskLog(reset);
+        reset();
       }
     } else {
       start();
@@ -60,7 +55,7 @@ class Timer extends React.Component {
     });
   };
 
-  _addTaskLog = reset => {
+  _addTaskLog = () => {
     const { taskName } = this.state;
     const { setTask } = this.props;
 
@@ -80,17 +75,15 @@ class Timer extends React.Component {
       timeSpend,
     });
 
-    this.setState({
+    this.setState(() => ({
       taskName: '',
-      initialTime: 0,
       isStartTimer: false,
       isOpenDialogNoName: false,
-    });
+      initialTime: 0,
+    }));
 
     setLS('timeSpend', 0);
     setLS('isStartTimer', 0);
-
-    reset();
   };
 
   _toggleDialogTaskNoName = status =>
