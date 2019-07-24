@@ -2,7 +2,6 @@ import React from 'react';
 import moment from 'moment';
 
 import { FOTMAT } from 'utils/constants';
-// import { currentTime, getLS } from 'utils/utils';
 
 const INITIAL_TIME = '00:00:00';
 
@@ -10,16 +9,8 @@ class Clock extends React.Component {
   constructor() {
     super();
 
-    // const isStartTimer = getLS('isStartTimer');
-    // const timeSpend = currentTime() - getLS('timeStart');
-
-    // const initialTime = isStartTimer
-    //   ? currentTime() - getLS('timeStart') + timeSpend
-    //   : 0;
-    // console.log('timeSpend: ', timeSpend);
     this.state = {
       timeSpend: INITIAL_TIME,
-      // initialTime,
     };
   }
 

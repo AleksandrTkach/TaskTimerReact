@@ -8,6 +8,8 @@ import { getFormatTime } from 'utils/utils';
 import BtnInfo from './BtnInfo';
 import BtnRemove from './BtnRemove';
 
+import './TasksRows.scss';
+
 const styleButton = {
   background: 'white',
   borderRadius: 0,
@@ -27,7 +29,9 @@ class TasksRows extends React.Component {
             <TableCell component="th" scope="row">
               {++index}
             </TableCell>
-            <TableCell align="left">{task.taskName}</TableCell>
+            <TableCell align="left" className="table__col_task-name">
+              {task.taskName}
+            </TableCell>
             <TableCell align="center">
               {getFormatTime(task.timeStart)}
             </TableCell>

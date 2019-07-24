@@ -116,7 +116,6 @@ class Timer extends React.Component {
           isOpenDialog={isOpenDialogNoName}
           clickDialogOpen={() => this._toggleDialogTaskNoName(true)}
           clickDialogClose={() => this._toggleDialogTaskNoName(false)}
-          clickDialogSuccess={() => this._toggleDialogTaskNoName(false)}
           dialogTitle="Empty task name"
           dialogContentText="You are trying close your task without name, please enter the title and try gain!"
         />

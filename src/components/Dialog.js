@@ -13,7 +13,7 @@ class FormDialog extends React.Component {
       dialogContentText,
       isOpenDialog,
       clickDialogClose,
-      clickDialogSuccess,
+      clickDialogSuccess = clickDialogClose,
       btnSuccessText = 'Close',
       btnRejectText = null,
     } = this.props;
