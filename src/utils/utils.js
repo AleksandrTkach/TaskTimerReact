@@ -129,7 +129,8 @@ export const setChartColumns = (chartColumns, newTasksFormat) => {
         if (task.startHour === hour) {
           columns[hour].uv += 60 - task.startMin;
         } else {
-          columns[hour].uv += 60;
+          columns[hour].uv =
+            columns[hour].uv < 60 ? columns[hour].uv + 60 : columns[hour].uv;
         }
       }
       columns[task.endHour].uv += task.endMin;

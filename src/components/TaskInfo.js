@@ -18,55 +18,53 @@ import { ROUTER } from 'utils/constants';
 
 import './TaskInfo.scss';
 
-class TaskInfo extends React.Component {
-  render() {
-    const { tasks, match } = this.props;
-    const task = tasks[match.params.id];
+const TaskInfo = props => {
+  const { tasks, match } = props;
+  const task = tasks[match.params.id];
 
-    return (
-      <>
-        {typeof task !== 'undefined' ? (
-          <div className="task-info__wrapper">
-            <Card className="task-info__card">
-              <CardHeader title={`${task.taskName}`} />
-              <CardContent>
-                <Table>
-                  <TableBody>
-                    <TableRow>
-                      <TableCell align="left"> Time start: </TableCell>
-                      <TableCell align="left">
-                        {getFormatTime(task.timeStart)}
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell align="left"> Time end: </TableCell>
-                      <TableCell align="left">
-                        {getFormatTime(task.timeEnd)}
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell align="left"> Time spend: </TableCell>
-                      <TableCell align="left">
-                        {getFormatTime(task.timeSpend, true)}
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </CardContent>
-              <CardActions style={{ justifyContent: 'flex-end' }}>
-                <Link to={ROUTER.tasksLog}>
-                  <Button size="small"> Back </Button>
-                </Link>
-              </CardActions>
-            </Card>
-          </div>
-        ) : (
-          <NotFound />
-        )}
-      </>
-    );
-  }
-}
+  return (
+    <>
+      {typeof task !== 'undefined' ? (
+        <div className="task-info__wrapper">
+          <Card className="task-info__card">
+            <CardHeader title={`${task.taskName}`} />
+            <CardContent>
+              <Table>
+                <TableBody>
+                  <TableRow>
+                    <TableCell align="left"> Time start: </TableCell>
+                    <TableCell align="left">
+                      {getFormatTime(task.timeStart)}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell align="left"> Time end: </TableCell>
+                    <TableCell align="left">
+                      {getFormatTime(task.timeEnd)}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell align="left"> Time spend: </TableCell>
+                    <TableCell align="left">
+                      {getFormatTime(task.timeSpend, true)}
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </CardContent>
+            <CardActions style={{ justifyContent: 'flex-end' }}>
+              <Link to={ROUTER.tasksLog}>
+                <Button size="small"> Back </Button>
+              </Link>
+            </CardActions>
+          </Card>
+        </div>
+      ) : (
+        <NotFound />
+      )}
+    </>
+  );
+};
 
 const mapStateToProps = ({ tasks }) => {
   return {

@@ -8,27 +8,25 @@ import { generateNewTasks, setLS } from 'utils/utils';
 
 import './BtnGenerate.scss';
 
-class BtnGenerate extends React.Component {
-  _generate = async () => {
-    await this.props.resetTasks();
+const BtnGenerate = props => {
+  const _generate = async () => {
+    await props.resetTasks();
     const newTasks = await generateNewTasks();
     setLS('tasks', newTasks, false);
-    await this.props.refreshTasks(newTasks);
-    this.props.buildChart();
+    await props.refreshTasks(newTasks);
+    props.buildChart();
   };
 
-  render() {
-    return (
-      <Button
-        variant="contained"
-        className="btn btn__generate"
-        onClick={() => this._generate()}
-      >
-        Generate
-      </Button>
-    );
-  }
-}
+  return (
+    <Button
+      variant="contained"
+      className="btn btn__generate"
+      onClick={() => _generate()}
+    >
+      Generate
+    </Button>
+  );
+};
 
 const mapDispatchToProps = {
   setTask,

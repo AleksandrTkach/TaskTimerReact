@@ -11,32 +11,25 @@ import NotFound from 'containers/NotFound';
 import { ROUTER } from 'utils/constants';
 import store from 'store';
 
-class App extends React.Component {
-  render() {
-    return (
-      <Provider store={store}>
-        <Container>
-          <BrowserRouter>
-            <Switch>
-              <Route
-                path={[ROUTER.home, ROUTER.tasksLog, ROUTER.tasksChart]}
-                exact
-              >
-                <Timer />
-                <Tabs />
-              </Route>
+const App = () => (
+  <Provider store={store}>
+    <Container>
+      <BrowserRouter>
+        <Switch>
+          <Route path={[ROUTER.home, ROUTER.tasksLog, ROUTER.tasksChart]} exact>
+            <Timer />
+            <Tabs />
+          </Route>
 
-              <Route path={`${ROUTER.taskInfo}:id`}>
-                <TaskInfo />
-              </Route>
+          <Route path={`${ROUTER.taskInfo}:id`}>
+            <TaskInfo />
+          </Route>
 
-              <Route component={NotFound} />
-            </Switch>
-          </BrowserRouter>
-        </Container>
-      </Provider>
-    );
-  }
-}
+          <Route component={NotFound} />
+        </Switch>
+      </BrowserRouter>
+    </Container>
+  </Provider>
+);
 
 export default App;
