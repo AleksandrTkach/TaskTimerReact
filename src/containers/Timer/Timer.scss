@@ -1,13 +1,4 @@
 .timer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 200px;
-  width: 200px;
-  border-radius: 50% !important;
-  font-size: 3rem;
-  margin-bottom: 1rem !important;
-
   &__wrapper {
     display: flex;
     flex-direction: column;
@@ -15,12 +6,25 @@
     margin-bottom: 1rem !important;
   }
 
+  &__clock {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    width: 200px;
+    border-radius: 50% !important;
+    font-size: 3rem;
+    margin-bottom: 1rem !important;
+  }
+
   &__input {
     margin-bottom: 1rem !important;
   }
+
+  &__btn {
+    background-color: white !important;
+    border-radius: 0 !important;
+  }
 }
 
-.btn {
-  background-color: white !important;
-  border-radius: 0 !important;
-}
+

@@ -126,12 +126,12 @@ class Timer extends React.Component {
           placeholder="Name of your task"
           className="timer__input"
         />
-        <Paper className="timer">
+        <Paper className="timer__clock">
           <Clock time={initialTime} timeSpend={timeSpend} ref={this.clock} />
         </Paper>
         <Button
           variant="contained"
-          className="btn"
+          className="btn timer__btn"
           onClick={() => this.toggleStatusTimer()}
         >
           {!isStartTimer ? 'Start' : 'Stop'}

@@ -19,7 +19,7 @@ class Clock extends React.Component {
   }
 
   start = () => {
-    this.interval = setInterval(this._tick, 250);
+    this.interval = setInterval(this._tick, 500);
   };
 
   stop = () => {
