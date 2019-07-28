@@ -9,6 +9,7 @@ import BtnInfo from './BtnInfo';
 import BtnRemove from './BtnRemove';
 
 import './TasksRows.scss';
+import TableBody from '@material-ui/core/TableBody/TableBody';
 
 const styleButton = {
   background: 'white',
@@ -21,7 +22,10 @@ class TasksRows extends React.Component {
       ? getFormatTime(task.timeEnd + 1000)
       : getFormatTime(task.timeEnd);
 
+  timeSpend = 0;
+
   render() {
+    this.props.tasks.map(task => (this.timeSpend += task.timeSpend));
     return (
       <>
         {this.props.tasks.map((task, index) => (
@@ -52,6 +56,16 @@ class TasksRows extends React.Component {
             </TableCell>
           </TableRow>
         ))}
+        <TableRow>
+          <TableCell />
+          <TableCell colSpan={3}>
+            <b>Total</b>
+          </TableCell>
+          <TableCell align={'center'}>
+            <b>{getFormatTime(this.timeSpend, true)}</b>
+          </TableCell>
+          <TableCell colSpan={2} />
+        </TableRow>
       </>
     );
   }
