@@ -39,7 +39,7 @@ const TableLog = ({ tasks }) => {
   return (
     <>
       <Paper className={classes.root}>
-        <Table className={classes.table}>
+        <Table className={classes.table} size="small">
           <TableHead>
             <TableRow>
               {tableHeads.map((tableHead, index) => (
